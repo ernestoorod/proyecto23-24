@@ -6,8 +6,10 @@ function validarCorreo() {
 
     if (correoValue === '' || !regex.test(correoValue)) {
         correoInput.style.border = '3px solid red';
+        return false;
     } else {
         correoInput.style.border = '3px solid green';
+        return true;
     }
 }
 
@@ -17,12 +19,11 @@ window.addEventListener('load', function () {
     correoInput.style.border = '';
 
     correoInput.addEventListener('input', validarCorreo);
-});
 
-function redirigirARegistro() {
-    validarCorreo();
-    let correoInput = document.getElementById('correo');
-    if (correoInput.style.border === '3px solid green') {
-        window.location.href = "./registro.html";
-    }
-}
+    let empezarButton = document.getElementById('empezarButton');
+    empezarButton.addEventListener('click', function () {
+        if (validarCorreo()) {
+            window.location.href = "./registro.html";
+        }
+    });
+});

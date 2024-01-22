@@ -1,0 +1,13 @@
+landing - vacio
+
+iniciosesion - usuario, contraseña
+
+registro - ID(AUTOMATICO), usuario, nombre, correo, contraseña, localidad, telefono, nom_club, tipo.
+
+principal - nombre_carrera, lugar, kilometros, fecha
+
+busqueda - nombre_carrera, lugar, kilometros, fecha, ¿localidad?
+
+detalles_carrera - ID(AUTOMATICO), foto_carrera, TABLA EXTERNAS(MODALIDADES, PREMIOS)[modalidades - ID, nombre][premios - ID, ID_modalidad, premios], localizacion, fecha_realizacion, distancia, desnivel, categorias, mapa, tiempo(QUEDAN X TIEMPO para la carrera).
+
+datos_usuario - 

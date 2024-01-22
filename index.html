@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200;0,7..72,300;0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;0,7..72,800;0,7..72,900;1,7..72,200;1,7..72,300;1,7..72,400;1,7..72,500;1,7..72,600;1,7..72,700;1,7..72,800;1,7..72,900&family=Roboto:wght@100&display=swap" rel="stylesheet">
+    <script src="./JS/landingpage.js" defer></script>
 </head>
 <body>
 <div id="imagenOculta"></div>
@@ -28,13 +29,14 @@
 
 <main id="CORREO"> 
     <div>
-        <div id="ENTRA"><span >ENTRA Y DISFRUTA</span></div> 
-        <form method="post">
+        <div id="ENTRA"><span>ENTRA Y DISFRUTA</span></div> 
+        <form method="post" onsubmit="return validarCorreo()">
             <input type="text" name="correo" id="correo" placeholder="Direccion de correo">
-        </form>
-        <a href="./registro.html"><button>
-            <p>EMPEZAR</p>
-        </button> </a>      
+            <button type="button" id="empezarButton" onclick="redirigirARegistro()">
+                <p>EMPEZAR</p>
+            </button>
+            
+        </form>     
     </div>
 </main>
 
@@ -50,8 +52,6 @@
     <img src="./IMAGENES/logo.png" id="fotologo"><p>Life Among Mountains</p>
 </footer>
 
-</body>
-
- 
+</body> 
 
 </html>

@@ -1,8 +1,8 @@
 function validarCorreo() {
-    var correoInput = document.getElementById('correo');
-    var correoValue = correoInput.value.trim();
+    let correoInput = document.getElementById('correo');
+    let correoValue = correoInput.value.trim();
 
-    var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    let regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (correoValue === '' || !regex.test(correoValue)) {
         correoInput.style.border = '3px solid red';
@@ -12,7 +12,7 @@ function validarCorreo() {
 }
 
 window.addEventListener('load', function () {
-    var correoInput = document.getElementById('correo');
+    let correoInput = document.getElementById('correo');
     correoInput.value = '';
     correoInput.style.border = '';
 
@@ -21,7 +21,7 @@ window.addEventListener('load', function () {
 
 function redirigirARegistro() {
     validarCorreo();
-    var correoInput = document.getElementById('correo');
+    let correoInput = document.getElementById('correo');
     if (correoInput.style.border === '3px solid green') {
         window.location.href = "./registro.html";
     }

@@ -291,6 +291,7 @@ footer p{
 @media screen and (max-width: 800px) {
 
     body{
+        overflow-x: hidden;
         background-image: url(../IMAGENES/imagen7-2.jpg);
         background-color: rgba(0, 0, 0, 0.8);
         background-blend-mode: multiply;
@@ -399,6 +400,7 @@ footer p{
     footer img{
         display: none;
     }
+
     
 }
 

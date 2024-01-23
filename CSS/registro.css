@@ -57,7 +57,46 @@ input:hover {
     border: 1px solid #ccc;
 }
 
-@media screen and (max-width: 400px){
+
+.logo-container {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 90px;
+    height: auto;
+}
+
+.logo-container img {
+    width: 100%;
+    height: auto;
+}
+
+
+@media screen and (max-width: 800px){
+    .background-image {
+        display: none;
+    }
+
+    form {
+        max-width: 600px;
+        height: 100%;
+    }
+
+    .logo-container {
+        left: 40%;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"] {
+        margin-bottom: 20px;
+    }
+
+    input[type="submit"]{
+        margin-top: 60px;
+    }
     
 }
+
 

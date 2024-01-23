@@ -4,6 +4,11 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+span{
+    position: relative;
+        left:-20px;
+}
+
 .login-container {
     display: flex;
     height: 100vh;
@@ -35,8 +40,9 @@ form {
 input[type="text"],
 input[type="email"],
 input[type="password"],
-input[type="number"] {
-    width: 97%;
+input[type="number"],
+input[type="file"] {
+    width: 94%;
     padding: 5px;
     margin-bottom: 10px;
 }
@@ -53,9 +59,6 @@ form input[type="submit"] {
     border: 1px solid #ccc;
 }
 
-input:hover {
-    border: 1px solid #ccc;
-}
 
 
 .logo-container {
@@ -71,10 +74,14 @@ input:hover {
     height: auto;
 }
 
-
-@media screen and (max-width: 800px){
+@media screen and (max-width: 500px) {
     .background-image {
         display: none;
+    }
+
+    span{
+        top: -40px;
+        left:360px;
     }
 
     form {
@@ -86,17 +93,16 @@ input:hover {
         left: 40%;
     }
 
+
     input[type="text"],
     input[type="email"],
     input[type="password"],
     input[type="number"] {
-        margin-bottom: 20px;
+        margin-bottom: 15px;
     }
 
-    input[type="submit"]{
-        margin-top: 60px;
+    #google{
+        margin-top: 50px;
     }
-    
+
 }
-
-

@@ -1,3 +1,4 @@
+//Correo
 function validarCorreo() {
     let correoInput = document.getElementById('correo');
     let correoValue = correoInput.value.trim();
@@ -9,6 +10,7 @@ function validarCorreo() {
         return false;
     } else {
         correoInput.style.border = '3px solid green';
+        document.cookie = `correo=${correoValue}; path=/`;
         return true;
     }
 }
@@ -27,3 +29,4 @@ window.addEventListener('load', function () {
         }
     });
 });
+

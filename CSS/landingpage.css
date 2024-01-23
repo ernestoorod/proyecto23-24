@@ -289,7 +289,32 @@ footer p{
 }
 
 @media screen and (max-width: 800px) {
+    body {
+        margin: 0; /* Elimina el margen predeterminado del body */
+        overflow-x: hidden; /* Evita el desplazamiento horizontal */
+    }
 
+    main:first-of-type {
+        width: 100%; /* Ocupa el 100% del ancho de la pantalla */
+        left: 0; /* Ajusta la posición izquierda a 0 */
+    }
+
+    #CORREO div {
+        width: 100%; /* Ocupa el 100% del ancho de la pantalla */
+        left: 0; /* Ajusta la posición izquierda a 0 */
+        top: 50px; /* Ajusta la posición superior según tus necesidades */
+    }
+
+    #INVITADO {
+        width: 100%; /* Ocupa el 100% del ancho de la pantalla */
+        left: 0; /* Ajusta la posición izquierda a 0 */
+        top: 200px; /* Ajusta la posición superior según tus necesidades */
+    }
+
+    footer {
+        margin-top: 0; /* Ajusta el margen superior a 0 */
+    }
+    
     body{
         overflow-x: hidden;
         background-image: url(../IMAGENES/imagen7-2.jpg);

@@ -163,7 +163,7 @@ footer p{
     display: none;
 }
 
-@media screen and (min-width: 1905px) and (max-width: 7000px){
+@media screen and (min-width: 1900px) and (max-width: 2000px){
 
     main:first-of-type{
         position: absolute;

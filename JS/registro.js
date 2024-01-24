@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let contraseña = document.getElementById('password');
     let repetircontraseña = document.getElementById('password2');
     let telefono = document.getElementById('telefono');
-
+    
     // Localidades
     fetch('poblaciones.json')
     .then(response => response.json())
@@ -34,6 +34,36 @@ document.addEventListener('DOMContentLoaded', function () {
     if (correoStorage) {
         correo.value = decodeURIComponent(correoStorage);
     }
+
+    
+    function submitForm(event) {
+        event.preventDefault();
+    
+        var formData = new FormData(registroForm);
+    
+        fetch(registroForm.action, {
+            method: "POST",
+            body: formData,
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Data received from server:", data);
+                
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+    }
+    
+    var registroForm = document.getElementById("registroForm");
+    registroForm.addEventListener("submit", submitForm);
+        
+    
 
     // Función para validar campo y mostrar símbolo de validación
     function validarCampo(valor, expresion, idValidacion) {

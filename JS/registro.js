@@ -1,10 +1,24 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const usuario = document.getElementById('username');
-    const nombre = document.getElementById('nombre');
-    const correo = document.getElementById('correo');
-    const contraseña = document.getElementById('password');
-    const repetircontraseña = document.getElementById('password2');
+    let usuario = document.getElementById('username');
+    let nombre = document.getElementById('nombre');
+    let correo = document.getElementById('correo');
+    let contraseña = document.getElementById('password');
+    let repetircontraseña = document.getElementById('password2');
     let telefono = document.getElementById('telefono');
+
+    // Localidades
+    fetch('poblaciones.json')
+    .then(response => response.json())
+    .then(data => {
+        const datalist = document.getElementById('localidades');
+
+        data.forEach(localidad => {
+        const option = document.createElement('option');
+        option.value = localidad.label;
+        datalist.appendChild(option);
+        });
+    })
+    .catch(error => console.error('Error al cargar las localidades:', error));
 
     // Email del landing page
     const cookies = document.cookie.split(';');

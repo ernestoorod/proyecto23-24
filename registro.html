@@ -37,10 +37,11 @@
             <input type="password" id="password" name="password"><span id="contraseñaValidacion" class="validacion"></span><br>
 
             <label for="password2">Repetir contraseña:</label><br>
-            <input type="password" id="password2" name="password2"><span id="repetirContraseñaValidacion" class="validacion"></span><br>
-
+            <input type="password" id="password2" name="password2"><span id="repetirContraseñaValidacion" class="validacion"></span><br>         
+            
             <label for="localidad">Localidad:</label><br>
-            <input type="text" id="localidad" name="localidad"><br>
+            <input type="text" id="localidad" name="localidad" list="localidades" required>
+            <datalist id="localidades"></datalist><br>
 
             <label for="foto">Imagen de perfil</label><br>
             <input type="file" name="foto" id="foto"><br>

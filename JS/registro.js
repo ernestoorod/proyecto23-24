@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function submitForm(event) {
         event.preventDefault();
     
-        var formData = new FormData(registroForm);
+        let formData = new FormData(registroForm);
     
         fetch(registroForm.action, {
             method: "POST",
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
     
-    var registroForm = document.getElementById("registroForm");
+    let registroForm = document.getElementById("registroForm");
     registroForm.addEventListener("submit", submitForm);
         
     

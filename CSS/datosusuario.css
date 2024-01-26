@@ -1,0 +1,114 @@
+html{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    max-width: 2600px;
+    margin: 0 auto;
+}
+
+body {
+    margin: 0;
+    margin-top: 100px;  
+}
+
+.basica,.contacto,.contraseña,.club{
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 700px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    padding: 10px;
+    margin-left: 330px;
+}
+
+label,input{
+    margin: 10px;
+}
+
+input{
+    width: 400px;
+    height: 25px;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f0f0f0; 
+    border-bottom: 1px solid #ccc; 
+    z-index: 1000; 
+}
+
+.logo-container,
+.profile-container {
+    margin-right: 10px;
+}
+
+.logo {
+    width: 50px; 
+}
+
+.search-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-input {
+    width: 500px;
+    padding: 5px;
+}
+
+.search-button {
+    margin-left: 5px;
+    padding: 5px;
+}
+
+.profile-picture {
+    width: 40px; 
+    border-radius: 50%; 
+}
+
+main {
+    display: flex;
+    padding: 20px;
+}
+
+aside {
+    width: 200px;
+    background-color: #f1f1f1;
+    padding: 20px;
+    text-align: center;
+    /* margin-left: -18px; */
+}
+
+aside a {
+    display: block;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: #333;
+    background-color: #ddd;
+}
+
+hr {
+    height: 1px;
+    background-color: #ddd;
+    border: none;
+    margin: 20px 0;
+}
+
+.logo {
+    width: 100px;
+    height: auto;
+}
+
+section {
+    padding: 20px;
+}

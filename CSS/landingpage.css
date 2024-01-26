@@ -133,6 +133,11 @@ main:first-of-type p{
     word-wrap: break-word
 }
 
+#PERFIL{
+    position: absolute;
+        left: 82%;
+}
+
 footer{
     position: absolute;
     margin-top: 44.5%;

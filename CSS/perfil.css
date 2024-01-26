@@ -136,3 +136,13 @@ dialog {
     height: 40px;
 }
 
+@media screen and (max-width: 500px){
+    body{
+        background-image: none;
+        background-color: rgb(20, 20, 20);
+    }
+
+    .logo-container{
+        margin-top: 280px;
+    }
+}

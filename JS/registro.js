@@ -35,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function () {
         correo.value = decodeURIComponent(correoStorage);
     }
 
-    
     function submitForm(event) {
         event.preventDefault();
     
@@ -62,9 +61,8 @@ document.addEventListener('DOMContentLoaded', function () {
     
     let registroForm = document.getElementById("registroForm");
     registroForm.addEventListener("submit", submitForm);
-        
     
-
+    
     // Función para validar campo y mostrar símbolo de validación
     function validarCampo(valor, expresion, idValidacion) {
         const validacionElemento = document.getElementById(idValidacion);

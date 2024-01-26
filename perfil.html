@@ -22,7 +22,7 @@
     <h2 class="primero">Hola, Nombre de usuario</h2>
     <button id="btn-mis-carreras">MIS CARRERAS</button>
     <button id="btn-abrir-modal">CREAR CARRERA</button>
-    <button id="btn-abrir-modal">EDITAR DATOS</button>
+    <a href="./datosusuario.html"><button id="btn-abrir-modal">EDITAR DATOS</button></a>
 
     <dialog id="modal">
         <i class="fa-solid fa-arrow-left" id="btn-volver-modal" class="flecha"></i>
@@ -56,7 +56,9 @@
         </form>
         <form action="#">
             <!-- Modalidades y premios -->
-            <label for="imagen">Subir imagen de la carrera:</label>
+            <label for="imagen">Subir portada de la carrera:</label>
+            <input type="file" name="imagen" id="imagen"><br>
+            <label for="imagen">Subir fotos de la carrera:</label>
             <input type="file" name="imagen" id="imagen"><br>
     
             <!-- Mapa -->

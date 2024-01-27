@@ -112,3 +112,40 @@ hr {
 section {
     padding: 20px;
 }
+
+@media screen and (max-width: 500px){
+    aside,.search-input,.search-button {
+        display: none;
+    }
+
+    .logo {
+        width: 50px;
+        border-radius: 100%;
+    }
+
+    .profile-container{
+            left: 100%;
+    }
+
+    header{
+        width: 95%;
+        margin-bottom: none;
+    }
+
+    .basica,.contacto,.contraseña,.club{
+        width: 325px;
+        
+        margin-bottom: 10px;
+        padding: 7px;
+        margin-left: 0;
+    }
+
+    .basica{
+        margin-top: -40px;
+    }
+
+    input{
+        width: 220px;
+        height: 25px;
+    }
+}

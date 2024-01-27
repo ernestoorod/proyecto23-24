@@ -144,5 +144,6 @@ dialog {
 
     .logo-container{
         margin-top: 280px;
+        width: 100%;
     }
 }

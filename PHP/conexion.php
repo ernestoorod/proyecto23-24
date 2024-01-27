@@ -16,12 +16,12 @@ class Conexion extends mysqli {
     }
 }
 
-// $conexion = new Conexion();
+$conexion = new Conexion();
 
-// if ($conexion->connect_error) {
-//     die("Error de conexión: " . $conexion->connect_error);
-// } else {
-//     echo "Conexión exitosa";
-// }
+if ($conexion->connect_error) {
+    die("Error de conexión: " . $conexion->connect_error);
+} else {
+    echo "Conexión exitosa";
+}
 
 ?>

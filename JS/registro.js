@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let contraseña = document.getElementById('password');
     let repetircontraseña = document.getElementById('password2');
     let telefono = document.getElementById('telefono');
+    let form = document.getElementById('registroForm');
     
     // Localidades
     fetch('poblaciones.json')
@@ -34,35 +35,33 @@ document.addEventListener('DOMContentLoaded', function () {
     if (correoStorage) {
         correo.value = decodeURIComponent(correoStorage);
     }
-
-    function submitForm(event) {
+  
+    //API
+    form.addEventListener('submit', function (event) {
         event.preventDefault();
-    
-        let formData = new FormData(registroForm);
-    
-        fetch(registroForm.action, {
-            method: "POST",
-            body: formData,
+
+        let datosFormulario = new FormData(form);
+
+        fetch('./PHP/usuarios.php', {
+            method: 'POST',
+            body: datosFormulario
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+                throw new Error('Error de conexión al servidor. Estado: ' + response.status);
             }
-            return response.json();
+            return response.text();
         })
         .then(data => {
-            console.log("Data received from server:", data);
-                
+            console.log('Respuesta del servidor:', data);
+            window.location.href = './principal.html';
         })
         .catch(error => {
-            console.error("Error:", error);
+            console.log('Error:', error.message);
         });
-    }
-    
-    let registroForm = document.getElementById("registroForm");
-    registroForm.addEventListener("submit", submitForm);
-    
-    
+    });
+
+
     // Función para validar campo y mostrar símbolo de validación
     function validarCampo(valor, expresion, idValidacion) {
         const validacionElemento = document.getElementById(idValidacion);

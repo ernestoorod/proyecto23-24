@@ -133,11 +133,10 @@ section {
     }
 
     .basica,.contacto,.contraseña,.club{
-        width: 325px;
-        
+        width: 90%;
         margin-bottom: 10px;
         padding: 7px;
-        margin-left: 0;
+        margin-left: 1vh;
     }
 
     .basica{
@@ -145,7 +144,7 @@ section {
     }
 
     input{
-        width: 220px;
+        width: 200px;
         height: 25px;
     }
 }

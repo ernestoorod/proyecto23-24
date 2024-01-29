@@ -10,18 +10,17 @@ class Conexion extends mysqli {
         try {
             parent::__construct($this->host, $this->user, $this->pass, $this->db);
         } catch (mysqli_sql_exception $e) {
-            echo "Error: {$e->getMessage()}";
+            echo json_encode(['success' => false, 'error' => 'Error de conexión: ' . $e->getMessage()]);
             exit;
         }
     }
 }
 
-$conexion = new Conexion();
-
-if ($conexion->connect_error) {
-    die("Error de conexión: " . $conexion->connect_error);
-} else {
-    echo "Conexión exitosa";
-}
-
+// Crear una instancia de la conexión (puedes omitir la creación si no la usas directamente aquí)
+//$conexion = new Conexion();
+//
+//if ($conexion->connect_error) {
+//    echo json_encode(['success' => false, 'error' => 'Error de conexión: ' . $conexion->connect_error]);
+//    exit;
+//}
 ?>

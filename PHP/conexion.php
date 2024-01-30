@@ -16,11 +16,4 @@ class Conexion extends mysqli {
     }
 }
 
-// Crear una instancia de la conexión (puedes omitir la creación si no la usas directamente aquí)
-//$conexion = new Conexion();
-//
-//if ($conexion->connect_error) {
-//    echo json_encode(['success' => false, 'error' => 'Error de conexión: ' . $conexion->connect_error]);
-//    exit;
-//}
 ?>

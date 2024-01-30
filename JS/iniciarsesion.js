@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('loginForm');
+    let form = document.getElementById('loginForm');
 
     form.addEventListener('submit', async function (event) {
         event.preventDefault();
 
         try {
-            const formData = new FormData(form);
+            let formData = new FormData(form);
 
-            const response = await fetch('./PHP/iniciosesion.php', {
+            let response = await fetch('../PHP/iniciosesion.php', {
                 method: 'POST',
                 body: formData
             });
@@ -16,27 +16,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 throw new Error('Error de conexión al servidor. Estado: ' + response.status);
             }
 
-            const rawData = await response.text();
+            let rawData = await response.json();
 
             console.log('Respuesta del servidor:', rawData);
 
-            const trimmedData = rawData.trim();
+            if (rawData.success && rawData.token) {
+                localStorage.setItem('miToken', rawData.token);
 
-            let jsonData;
-            try {
-                jsonData = JSON.parse(trimmedData);
-            } catch (jsonError) {
-                console.error('Error al analizar JSON:', jsonError.message);
-                return;
-            }
-
-            if (jsonData.success) {
-                window.location.href = jsonData.redirect;
+                window.location.href = rawData.redirect;
             } else {
-                console.error('Error:', jsonData.error);
+                console.error('Error:', rawData.error);
             }
+
         } catch (error) {
             console.error('Error:', error.message);
         }
+
     });
 });

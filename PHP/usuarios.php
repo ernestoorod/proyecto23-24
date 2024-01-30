@@ -6,10 +6,10 @@ require_once '../vendor/autoload.php';
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-class TokenGenerator
-{
+class TokenGenerator{
     public static function generateToken($userId, $username){
-        $secretKey = 'ERRrodriguez2002';
+
+        $secretKey = base64_encode('ERRrodriguez2002');
 
         $expirationTime = time() + 86400;
 

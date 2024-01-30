@@ -1,6 +1,30 @@
 <?php
 require_once 'conexion.php';
 
+require_once '../vendor/autoload.php';
+
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
+class TokenGenerator{
+    public static function generateToken($userId, $username){
+
+        $secretKey = base64_encode('ERRrodriguez2002');
+
+        $expirationTime = time() + 86400;
+
+        $tokenPayload = [
+            "id" => $userId,
+            "username" => $username,
+            "exp" => $expirationTime
+        ];
+
+        $token = JWT::encode($tokenPayload, $secretKey, 'HS256');
+
+        return $token;
+    }
+}
+
 $con = new Conexion();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -15,11 +39,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->fetch();
 
         if (password_verify($password, $hashedPassword)) {
+
+            $token = TokenGenerator::generateToken($userId, $username);
+
             session_start();
             $_SESSION['user_id'] = $userId;
             $_SESSION['username'] = $username;
 
-            echo json_encode(['success' => true, 'redirect' => './principal.html']);
+            echo json_encode(['success' => true, 'token' => $token, 'redirect' => './principal.html']);
             exit;
         } else {
             echo json_encode(['success' => false, 'error' => 'Nombre de usuario o contraseña incorrectos.']);
@@ -34,4 +61,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     exit;
 }
 ?>
- 

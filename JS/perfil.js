@@ -35,4 +35,5 @@ document.addEventListener('DOMContentLoaded', function () {
         modal.close();
         crearcarrera.showModal();
     });
+
 });

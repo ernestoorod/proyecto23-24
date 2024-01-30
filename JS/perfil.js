@@ -35,22 +35,4 @@ document.addEventListener('DOMContentLoaded', function () {
         modal.close();
         crearcarrera.showModal();
     });
-
-    // window.addEventListener('resize', function () {
-    //     var paragraphs = document.querySelectorAll('#crearcarrera-form p');
-    //     var screenWidth = window.innerWidth;
-
-    //     // Define el ancho límite para la media query
-    //     var breakpoint = 500;
-
-    //     paragraphs.forEach(function (paragraph) {
-    //         if (screenWidth <= breakpoint) {
-    //             paragraph.style.display = 'none';
-    //         } else {
-    //             paragraph.style.display = 'block';
-    //         }
-    //     });
-    // });
-
-    // window.dispatchEvent(new Event('resize'));
 });

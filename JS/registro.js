@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', function () {
     let repetircontraseña = document.getElementById('password2');
     let telefono = document.getElementById('telefono');
     let form = document.getElementById('registroForm');
-    
-    // Localidades
+    let tokenForm = document.getElementById('loginForm');
+
     fetch('poblaciones.json')
     .then(response => response.json())
     .then(data => {
@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .catch(error => console.error('Error al cargar las localidades:', error));
 
-    // Email del landing page
     const cookies = document.cookie.split(';');
     let correoStorage = '';
     for (let cookie of cookies) {
@@ -36,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function () {
         correo.value = decodeURIComponent(correoStorage);
     }
   
-    //API
     form.addEventListener('submit', function (event) {
         event.preventDefault();
 
@@ -61,8 +59,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-
-    // Función para validar campo y mostrar símbolo de validación
     function validarCampo(valor, expresion, idValidacion) {
         const validacionElemento = document.getElementById(idValidacion);
         if (valor && expresion.test(valor)) {
@@ -72,25 +68,21 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Nombre de usuario
     function validarNombreUsuario() {
         const valor = usuario.value.trim();
         validarCampo(valor, /^([^\s_].*[^\s_])?$/, 'usuarioValidacion');
     }
 
-    // Nombre
     function validarNombre() {
         const valor = nombre.value.trim();
         validarCampo(valor, /^.+$/, 'nombreValidacion');
     }
 
-    // Correo electrónico
     function validarCorreo() {
         const valor = correo.value.trim();
         validarCampo(valor, /^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'correoValidacion');
     }
 
-    // Contraseña
     function validarContraseña() {
         const valor = contraseña.value;
         const longitud = valor.length;
@@ -111,55 +103,50 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             mostrarFortalezaContraseña('Muy Debil');
         }
-        
     }
 
-    // Función para mostrar la fortaleza de la contraseña
     function mostrarFortalezaContraseña(fortaleza) {
         const validacionElemento = document.getElementById('contraseñaValidacion');
         validacionElemento.innerHTML = fortaleza;
 
-    function aplicarEstilos(mediaQuery) {
-        if (mediaQuery.matches) {
-            if (fortaleza === 'Muy Debil') {
-                validacionElemento.style.top = '-40px';
-                validacionElemento.style.left = '305px';
-            } else if (fortaleza === 'Muy Fuerte') {
-                validacionElemento.style.top = '-40px';
-                validacionElemento.style.left = '295px';
-            } else if (fortaleza === 'Debil') {
-                validacionElemento.style.top = '-40px';
-                validacionElemento.style.left = '340px';
+        function aplicarEstilos(mediaQuery) {
+            if (mediaQuery.matches) {
+                if (fortaleza === 'Muy Debil') {
+                    validacionElemento.style.top = '-40px';
+                    validacionElemento.style.left = '305px';
+                } else if (fortaleza === 'Muy Fuerte') {
+                    validacionElemento.style.top = '-40px';
+                    validacionElemento.style.left = '295px';
+                } else if (fortaleza === 'Debil') {
+                    validacionElemento.style.top = '-40px';
+                    validacionElemento.style.left = '340px';
+                } else {
+                    validacionElemento.style.top = '-40px';
+                    validacionElemento.style.left = '330px';
+                }
             } else {
-                validacionElemento.style.top = '-40px';
-                validacionElemento.style.left = '330px';
-            }
-        } else {
-            if (fortaleza === 'Muy Debil') {
-                validacionElemento.style.top = '-35px';
-                validacionElemento.style.left = '370px';
-            } else if (fortaleza === 'Muy Fuerte') {
-                validacionElemento.style.top = '-35px';
-                validacionElemento.style.left = '360px';
-            } else if (fortaleza === 'Debil') {
-                validacionElemento.style.top = '-35px';
-                validacionElemento.style.left = '405px';
-            } else {
-                validacionElemento.style.top = '-35px';
-                validacionElemento.style.left = '395px';
+                if (fortaleza === 'Muy Debil') {
+                    validacionElemento.style.top = '-35px';
+                    validacionElemento.style.left = '370px';
+                } else if (fortaleza === 'Muy Fuerte') {
+                    validacionElemento.style.top = '-35px';
+                    validacionElemento.style.left = '360px';
+                } else if (fortaleza === 'Debil') {
+                    validacionElemento.style.top = '-35px';
+                    validacionElemento.style.left = '405px';
+                } else {
+                    validacionElemento.style.top = '-35px';
+                    validacionElemento.style.left = '395px';
+                }
             }
         }
+
+        const mediaQuery = window.matchMedia('(max-width: 500px)');
+        aplicarEstilos(mediaQuery);
+
+        mediaQuery.addEventListener('change', aplicarEstilos);
     }
 
-    const mediaQuery = window.matchMedia('(max-width: 500px)');
-    aplicarEstilos(mediaQuery);
-
-    mediaQuery.addeventListener(aplicarEstilos);
-    }
-    
-
-
-    // Repetir Contraseña
     function validarRepetirContraseña() {
         const valor1 = contraseña.value;
         const valor2 = repetircontraseña.value;
@@ -171,32 +158,94 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Función para mostrar la coincidencia de las contraseñas
     function mostrarCoincidenciaContraseña(coinciden) {
         const validacionElemento = document.getElementById('repetirContraseñaValidacion');
         validacionElemento.innerHTML = coinciden ? '✓' : '';
     }
 
-
-    // Teléfono
     function validarTelefono() {
         const valor = telefono.value.trim();
         validarCampo(valor, /^\d{9}$/, 'telefonoValidacion');
     }
 
-    // Asociar funciones de validación a los eventos de cambio en los campos correspondientes
+    function realizarSolicitudProtegida() {
+        const token = localStorage.getItem('token');
+
+        if (token) {
+            fetch('../PHP/usuarios.php', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la solicitud protegida. Estado: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Respuesta de la solicitud protegida:', data);
+            })
+            .catch(error => {
+                console.error('Error en la solicitud protegida:', error.message);
+            });
+        } else {
+            console.error('Token no disponible. El usuario no está autenticado.');
+        }
+    }
+
+    
+
+
     usuario.addEventListener('input', validarNombreUsuario);
     nombre.addEventListener('input', validarNombre);
     correo.addEventListener('input', validarCorreo);
     contraseña.addEventListener('input', validarContraseña);
     repetircontraseña.addEventListener('input', validarRepetirContraseña);
     telefono.addEventListener('input', validarTelefono);
+    
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
 
-    // Llamada a las funciones de validación en la carga inicial
+        let datosFormulario = new FormData(form);
+
+        fetch('../PHP/usuarios.php', {
+            method: 'POST',
+            body: datosFormulario
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error de conexión al servidor. Estado: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Respuesta del servidor:', data);
+
+            if (data.success && data.token) {
+                document.cookie = `token=${data.token}; expires=${new Date(data.expires)}`;
+
+                console.log('Token almacenado en cookie:', document.cookie);
+
+                window.location.href = '../principal.html';
+            } else {
+                console.error('Error al registrar usuario:', data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error.message);
+        });
+    });
+
+
+
     validarNombreUsuario();
     validarNombre();
     validarCorreo();
     validarContraseña();
     validarRepetirContraseña();
     validarTelefono();
+
+    realizarSolicitudProtegida();
 });

@@ -16,20 +16,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 throw new Error('Error de conexión al servidor. Estado: ' + response.status);
             }
 
-            const rawData = await response.text(); // Obtener el cuerpo de la respuesta como texto
+            const rawData = await response.text();
 
-            // Imprimir la respuesta del servidor antes de intentar analizar el JSON
             console.log('Respuesta del servidor:', rawData);
 
-            const trimmedData = rawData.trim(); // Eliminar espacios en blanco alrededor de la respuesta
+            const trimmedData = rawData.trim();
 
-            // Intentar analizar el JSON solo si la respuesta es un JSON válido
             let jsonData;
             try {
                 jsonData = JSON.parse(trimmedData);
             } catch (jsonError) {
                 console.error('Error al analizar JSON:', jsonError.message);
-                return; // Salir si hay un error al analizar el JSON
+                return;
             }
 
             if (jsonData.success) {

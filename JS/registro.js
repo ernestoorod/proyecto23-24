@@ -41,37 +41,37 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('miToken', token);
     }
   
-    //API
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();
-    
-        let datosFormulario = new FormData(form);
-    
-        fetch('../PHP/usuarios.php', {
-            method: 'POST',
-            body: datosFormulario
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Error de conexión al servidor. Estado: ' + response.status);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Respuesta del servidor:', data);
-    
-            if (data.success && data.token) {
-                guardarTokenEnLocalStorage(data.token);
-    
-                window.location.href = '../principal.html';
-            } else {
-                console.error('Error al registrar usuario:', data.error);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error.message);
-        });
+    // API
+form.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    let datosFormulario = new FormData(form);
+
+    fetch('../PHP/usuarios.php', {
+        method: 'POST',
+        body: datosFormulario
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error de conexión al servidor. Estado: ' + response.status);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Respuesta del servidor:', data);
+
+        if (data.success && data.token) {
+            guardarTokenEnLocalStorage(data.token);
+
+            window.location.href = '../iniciarsesion.html';
+        } else {
+            console.log('Error al registrar usuario:', data.error);
+        }
+    })
+    .catch(error => {
+        console.log('Error:', error.message);
     });
+});
 
 
     // Función para validar campo y mostrar símbolo de validación
@@ -211,6 +211,5 @@ document.addEventListener('DOMContentLoaded', function () {
     validarContraseña();
     validarRepetirContraseña();
     validarTelefono();
-
     guardarTokenEnLocalStorage(data.token);
 });

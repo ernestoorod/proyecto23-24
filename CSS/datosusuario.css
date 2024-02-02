@@ -11,7 +11,7 @@ body {
     margin-top: 100px;  
 }
 
-.basica,.contacto,.contraseña,.club{
+.basica,.contacto,.contraseñadiv,.clubdiv{
     border: 1px solid black;
     border-radius: 5px;
     width: 700px;
@@ -113,12 +113,13 @@ section {
     padding: 20px;
 }
 
-.borrar-cuenta{
+.borrar-cuenta, .editar-cuenta{
     width: 400px;
     height: 35px;
     /* color: white;
     background-color: #333; */
     margin-left: 40%;
+    margin-bottom: 5px;
 }
 
 @media screen and (max-width: 500px){

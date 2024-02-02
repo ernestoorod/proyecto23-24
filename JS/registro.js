@@ -57,6 +57,7 @@ form.addEventListener('submit', function (event) {
         }
         return response.json();
     })
+
     .then(data => {
         console.log('Respuesta del servidor:', data);
 
@@ -68,6 +69,7 @@ form.addEventListener('submit', function (event) {
             console.log('Error al registrar usuario:', data.error);
         }
     })
+    
     .catch(error => {
         console.log('Error:', error.message);
     });

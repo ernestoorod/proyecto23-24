@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
     let nombreCarreraSpan = document.getElementById('nombreCarreraSpan');
     let btnSiguiente = document.getElementById('btn-siguiente');
     let token = localStorage.getItem("miToken");
+    let holaUsuarioElemento = document.querySelector('.primero');
+    let nombreUsuario = ObtenerNombreDeUsuarioDesdeToken(token);
 
     if (token !== null && !TokenExpirado(token)){
         btnAbrirModal.addEventListener("click", () => {
@@ -35,15 +37,11 @@ document.addEventListener('DOMContentLoaded', function () {
             nombreCarreraSpan.textContent = nombreCarrera;
             modal.close();
             crearcarrera.showModal();
-        }); 
+        });         
 
-        let holaUsuarioElement = document.querySelector('.primero');
+    holaUsuarioElemento.textContent = 'Hola, ' + nombreUsuario;
 
-        let nombreUsuario = ObtenerNombreDeUsuarioDesdeToken(token);
-
-        holaUsuarioElement.textContent = 'Hola, ' + nombreUsuario;
-
-        console.log(decodificarJWT(token));
+    console.log(decodificarJWT(token));
 
     }else {
         console.log('No se ha generado el token o ha expirado');

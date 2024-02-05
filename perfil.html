@@ -13,6 +13,7 @@
     <script src="./JS/perfil.js"></script>
     <link rel="stylesheet" href="./CSS/perfil.css">
 </head>
+
 <body>
     <main class="logo-container">
         <a href="./index.html"><img src="./IMAGENES/logoblanco.ico" id="fotologo"></a>
@@ -21,50 +22,8 @@
     <i class="fa-solid fa-right-from-bracket" id="logout"></i>
     <h2 class="primero">Hola, Nombre de usuario</h2>
     <button id="btn-mis-carreras">MIS CARRERAS</button>
-    <button id="btn-abrir-modal">CREAR CARRERA</button>
-    <a href="./datosusuario.html"><button id="btn-abrir-modal">EDITAR DATOS</button></a>
-
-    <dialog id="modal">
-        <i class="fa-solid fa-arrow-left" id="btn-volver-modal" class="flecha"></i>
-        <i class="fa-solid fa-x" id="btn-cerrar-modal" class="cerrar"></i>
-        <h1 class="h1nombre">Nombre de la carrera</h1>
-        <form action="#" method="post" id="carrera-form">
-            <input type="text" name="nombrecarrera" id="nombrecarrera"></p>
-            <input type="button" value="Siguiente" id="btn-siguiente">
-        </form>
-    </dialog>
-
-    <dialog id="crearcarrera">
-        <i class="fa-solid fa-arrow-left" id="btn-volver-crearcarrera" class="flecha"></i>
-        <i class="fa-solid fa-x" id="btn-cerrar-crearcarrera" class="cerrar"></i>
-        <h1 class="h1nombre"><span id="nombreCarreraSpan"></span></h1>
-        <form action="#" method="post" id="crearcarrera-form">
-            <p>
-                <label for="localizacion">Localizacion:</label>
-                <input type="text" name="localizacion" id="localizacion">
-    
-                <label for="distancia">Distancia:</label>
-                <input type="text" name="distancia" id="distancia">
-            </p>
-            <p id="segundop">
-                <label for="fecha">Fecha:</label>
-                <input type="text" name="fecha" id="fecha">
-    
-                <label for="desnivel">Desnivel:</label>
-                <input type="text" name="desnivel" id="desnivel">
-            </p>
-        </form>
-        <form action="#">
-            <!-- Modalidades y premios -->
-            <label for="imagen">Subir portada de la carrera:</label>
-            <input type="file" name="imagen" id="imagen"><br>
-            <label for="imagen">Subir fotos de la carrera:</label>
-            <input type="file" name="imagen" id="imagen"><br>
-    
-            <!-- Mapa -->
-            <input type="button" value="Crear carrera" id="btn-crear">
-        </form>
-    </dialog>
-    
+    <a href="./crearcarrera.html"><button id="btn-abrir-modal">CREAR CARRERA</button></a>
+    <a href="./datosusuario.html"><button id="btn-editar-datos">EDITAR DATOS</button></a>
 </body>
+
 </html>

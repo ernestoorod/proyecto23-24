@@ -9,7 +9,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
             let response = await fetch('../PHP/iniciosesion.php', {
                 method: 'POST',
-                body: formData
+                body: formData,
+                headers: {
+                    'Accept': 'application/json',
+                },
             });
 
             if (!response.ok) {
@@ -31,6 +34,5 @@ document.addEventListener('DOMContentLoaded', function () {
         } catch (error) {
             console.error('Error:', error.message);
         }
-
     });
 });

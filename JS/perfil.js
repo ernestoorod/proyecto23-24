@@ -1,43 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
-    let btnAbrirModal = document.getElementById('btn-abrir-modal');
-    let btnCerrarModal = document.getElementById('btn-cerrar-modal');
-    let btnVolverModal = document.getElementById('btn-volver-modal');
-    let btnCerrarCrearCarrera = document.getElementById('btn-cerrar-crearcarrera');
-    let btnVolverCrearCarrera = document.getElementById('btn-volver-crearcarrera');
-    let nombreCarreraSpan = document.getElementById('nombreCarreraSpan');
-    let btnSiguiente = document.getElementById('btn-siguiente');
     let token = localStorage.getItem("miToken");
     let holaUsuarioElemento = document.querySelector('.primero');
     let nombreUsuario = ObtenerNombreDeUsuarioDesdeToken(token);
 
-    if (token !== null && !TokenExpirado(token)){
-        btnAbrirModal.addEventListener("click", () => {
-            modal.showModal();
-        });
-
-        btnCerrarModal.addEventListener("click", () => {
-            modal.close();
-        });
-
-        btnVolverModal.addEventListener("click", () => {
-            modal.close();
-        });
-
-        btnCerrarCrearCarrera.addEventListener("click", () => {
-            crearcarrera.close();
-        });
-
-        btnVolverCrearCarrera.addEventListener("click", () => {
-            crearcarrera.close();
-            modal.showModal();
-        });
-
-        btnSiguiente.addEventListener("click", () => {
-            const nombreCarrera = document.getElementById('nombrecarrera').value;
-            nombreCarreraSpan.textContent = nombreCarrera;
-            modal.close();
-            crearcarrera.showModal();
-        });         
+    if (token !== null && !TokenExpirado(token)){     
 
     holaUsuarioElemento.textContent = 'Hola, ' + nombreUsuario;
 

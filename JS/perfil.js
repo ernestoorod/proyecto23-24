@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let token = localStorage.getItem("miToken");
     let holaUsuarioElemento = document.querySelector('.primero');
     let nombreUsuario = ObtenerNombreDeUsuarioDesdeToken(token);
+    let logoutButton = document.getElementById("logout");
 
     if (token !== null && !TokenExpirado(token)){     
 
@@ -40,4 +41,14 @@ document.addEventListener('DOMContentLoaded', function () {
         return tokenDecodificado.username;
     }
 
+    if (logoutButton) {
+        logoutButton.addEventListener('click', function () {
+            localStorage.removeItem('miToken');
+            window.location.href = './index.html';
+        });
+    }
+
+    if (window.location.href.includes("index.html")) {
+        localStorage.removeItem("miToken");
+    }
 });

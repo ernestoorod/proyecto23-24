@@ -18,4 +18,8 @@ document.addEventListener('DOMContentLoaded', function () {
         dialogo.close();
     });
 
+
+    if (window.location.href.includes("index.html")) {
+        localStorage.removeItem("miToken");
+    }
 });

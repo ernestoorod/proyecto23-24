@@ -64,7 +64,7 @@ form.addEventListener('submit', function (event) {
         if (data.success && data.token) {
             guardarTokenEnLocalStorage(data.token);
 
-            window.location.href = '../iniciarsesion.html';
+            window.location.href = './principal.html';
         } else {
             console.log('Error al registrar usuario:', data.error);
         }
@@ -196,6 +196,10 @@ form.addEventListener('submit', function (event) {
     function validarTelefono() {
         const valor = telefono.value.trim();
         validarCampo(valor, /^\d{9}$/, 'telefonoValidacion');
+    }
+
+    if (window.location.href.includes("index.html")) {
+        localStorage.removeItem("miToken");
     }
 
     // Asociar funciones de validación a los eventos de cambio en los campos correspondientes

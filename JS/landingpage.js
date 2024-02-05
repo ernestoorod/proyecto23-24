@@ -30,3 +30,7 @@ window.addEventListener('load', function () {
     });
 });
 
+if (window.location.href.includes("index.html")) {
+    localStorage.removeItem("miToken");
+}
+

@@ -7,10 +7,25 @@
     <link rel="stylesheet" href="./CSS/principal.css">
 </head>
 <body>
-    <div class="content-container">
+    <div class="content-container" id="profile-container">
         <p>Estás en la página principal</p>
-        <button id="botonperfil">PERFIL</button>
     </div>
+    <img src="./IMAGENES/logo.jpg" id="fotoperfil" style="display: none;">
+
+    <img src="./IMAGENES/logout.png" id="logout" style="display: none;">
+
+    <div class="iniciarsesion" id="login-container">
+        <a href="./iniciarsesion.html"><button>
+            <p>INICIAR SESION</p>
+        </button></a>
+    </div>
+
+    <div class="registro" id="registro-container">
+        <a href="./registro.html"><button>
+            <p>REGISTRO</p>
+        </button></a>
+    </div>
+
     <script src="./JS/principal.js"></script>
 </body>
 </html>

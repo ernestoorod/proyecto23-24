@@ -68,3 +68,7 @@ document.getElementById('btn-crear').addEventListener('click', function() {
         console.log('Error:', error);
     });
 });
+
+if (window.location.href.includes("index.html")) {
+    localStorage.removeItem("miToken");
+}

@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
         try {
             let formData = new FormData(form);
 
-            let response = await fetch('../PHP/iniciosesion.php', {
+            let response = await fetch('./PHP/iniciosesion.php', {
                 method: 'POST',
                 body: formData,
                 headers: {

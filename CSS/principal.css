@@ -5,7 +5,37 @@
 }
 
 #logout{
-    width: 25px;
-    height: 25px; 
+    width: 50px;
+    height: 50px; 
 }
 
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+#fotoperfil{
+    position: absolute;
+    top: 10px;
+    right: 70px;
+    display: inline-block;
+}
+
+#logout {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: inline-block;
+}
+
+#login-container{
+    position: absolute;
+    top: 10px;
+    right: 100px;
+}
+
+#registro-container {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}

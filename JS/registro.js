@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let form = document.getElementById('registroForm');
     
     // Localidades
-    fetch('poblaciones.json')
+    fetch('./poblaciones.json')
     .then(response => response.json())
     .then(data => {
         const datalist = document.getElementById('localidades');

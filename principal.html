@@ -4,28 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Life Among Mountains</title>
+    <link rel="shortcut icon" href="./IMAGENES/icono.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200;0,7..72,300;0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;0,7..72,800;0,7..72,900;1,7..72,200;1,7..72,300;1,7..72,400;1,7..72,500;1,7..72,600;1,7..72,700;1,7..72,800;1,7..72,900&family=Roboto:wght@100&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./CSS/principal.css">
+    <script src="https://kit.fontawesome.com/aa947686fa.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="content-container" id="profile-container">
-        <p>Estás en la página principal</p>
+    <header>
+        <div id="LOGO">
+            <a href="./index.html"><img src="./IMAGENES/logoblanco.ico" id="fotologo"></a>
+        </div>
+
+        <form class="busqueda">
+            <h1 id="h1">BUSQUEDA</h1><br>
+            <input type="text" name="nombrecarrera" id="nombrecarrera" placeholder="Nombre de la carrera...">
+            <input type="text" id="ccaa" name="comunidades" list="comunidades" placeholder="Comunidades Autonomas" required>
+            <datalist id="comunidades"></datalist>
+            <input type="button" id="buscar" value="Buscar">
+        </form>
+        
+        <img src="./IMAGENES/logo.jpg" id="fotoperfil" style="display: none;">
+
+        <img src="./IMAGENES/logoutblanco.png" id="logout" style="display: none;">
+        
+        <div class="iniciarsesion" id="login-container">
+            <a href="./iniciarsesion.html"><button>
+                <p>INICIAR SESION</p>
+            </button></a>
+        </div>
+
+        <div class="registro" id="registro-container">
+            <a href="./registro.html"><button>
+                <p>REGISTRO</p>
+            </button></a>
+        </div>
+    </header>
+    
+    <div class="ordenacion">
+        <div>
+            <button id="ordenar-nombre">Ordenar por Nombre (A-Z)</button>
+        </div>
+        <div>
+            <button id="ordenar-distancia">Ordenar por Distancia</button>
+        </div>
+        <div>
+            <button id="ordenar-fecha">Ordenar por Fecha</button>
+        </div>
     </div>
-    <img src="./IMAGENES/logo.jpg" id="fotoperfil" style="display: none;">
 
-    <img src="./IMAGENES/logout.png" id="logout" style="display: none;">
-
-    <div class="iniciarsesion" id="login-container">
-        <a href="./iniciarsesion.html"><button>
-            <p>INICIAR SESION</p>
-        </button></a>
-    </div>
-
-    <div class="registro" id="registro-container">
-        <a href="./registro.html"><button>
-            <p>REGISTRO</p>
-        </button></a>
-    </div>
-
+    <div class="carreras-container"></div>
+    
     <script src="./JS/principal.js"></script>
 </body>
 </html>

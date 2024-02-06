@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
   fetch("./PHP/principal.php", {
     method: "GET",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json",  
     },
   })
     .then((response) => response.json())
@@ -26,18 +26,17 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Error al cargar datos desde la API:", error);
     });
 
-  // Función para mostrar las carreras
-  let mostrarCarreras = (carreras) => {
-    if (!carreras || carreras.length === 0) {
-      console.error("No se recibieron datos de carreras desde la API");
-      return;
-    }
-
-    let carrerasContainer = document.querySelector(".carreras-container");
-    carreras.forEach((carrera) => {
-      let carreraDiv = document.createElement("div");
-      carreraDiv.classList.add("carrera");
-      carreraDiv.innerHTML = `
+    let mostrarCarreras = (carreras) => {
+      if (!carreras || carreras.length === 0) {
+        console.error("No se recibieron datos de carreras desde la API");
+        return;
+      }
+    
+      let carrerasContainer = document.querySelector(".carreras-container");
+      carreras.forEach((carrera) => {
+        let carreraDiv = document.createElement("div");
+        carreraDiv.classList.add("carrera");
+        carreraDiv.innerHTML = `
             <img src="${carrera.imagen}">
             <hr>
             <p>${carrera.nombre}</p>
@@ -56,10 +55,13 @@ document.addEventListener("DOMContentLoaded", function () {
               <span class="carrera-distancia">${carrera.distancia}km</span>
             </p>
         `;
-      carrerasContainer.appendChild(carreraDiv);
-    });
-  };
-
+        carreraDiv.addEventListener("click", () => {
+          window.location.href = `carrera.html?carrera=${encodeURIComponent(carrera.nombre)}`;
+        });
+        carrerasContainer.appendChild(carreraDiv);
+      });
+    };
+    
   // Obtener datos desde ccaa.json
   fetch("./ccaa.json")
     .then((response) => response.json())

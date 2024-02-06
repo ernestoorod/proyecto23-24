@@ -175,3 +175,9 @@ header {
     text-align: center;
 }
 
+#falta {
+    position: absolute;
+    top: 800px;
+    left: 50%;
+    transform: translateX(-50%);
+}

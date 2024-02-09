@@ -84,7 +84,7 @@ header {
 }
 
 #nombrecarrera,
-#ccaa {
+#provinciaInput {
     height: 30px;
 }
 
@@ -141,7 +141,7 @@ header {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, auto);
-    gap: 20px;
+    gap: 30px;
     justify-content: center;
     top: 300px;
     left: 50%;
@@ -175,9 +175,24 @@ header {
     text-align: center;
 }
 
-#falta {
+.pagination {
+    margin-bottom: 50px;
+    margin-top: 50px;
     position: absolute;
-    top: 800px;
-    left: 50%;
-    transform: translateX(-50%);
+        top: 920px;
+        left: 50%;
+        transform: translateX(-50%);
+    justify-content: center;
+    align-items: center;
+}
+.pagination-button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.pagination-button.active {
+    background-color: #ccc;
 }

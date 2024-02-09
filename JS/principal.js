@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Obtener el token de localStorage
+  let pageSize = 6;
+  let currentPage = 1;
+  let data; // Definición de la variable data en un ámbito más amplio
   let token = localStorage.getItem("miToken");
   let btnPerfil = document.getElementById("fotoperfil");
   let logoutButton = document.getElementById("logout");
@@ -14,69 +16,123 @@ document.addEventListener("DOMContentLoaded", function () {
   fetch("./PHP/principal.php", {
     method: "GET",
     headers: {
-      "Content-Type": "application/json",  
+      "Content-Type": "application/json",
     },
   })
     .then((response) => response.json())
-    .then((data) => {
+    .then((responseData) => {
+      data = responseData; // Asigna los datos recibidos a la variable data
       console.log(data);
-      mostrarCarreras(data);
+      mostrarCarreras(data); // Llama a la función para mostrar las carreras
     })
     .catch((error) => {
       console.error("Error al cargar datos desde la API:", error);
     });
 
-    let mostrarCarreras = (carreras) => {
-      if (!carreras || carreras.length === 0) {
-        console.error("No se recibieron datos de carreras desde la API");
-        return;
-      }
-    
-      let carrerasContainer = document.querySelector(".carreras-container");
-      carreras.forEach((carrera) => {
-        let carreraDiv = document.createElement("div");
-        carreraDiv.classList.add("carrera");
-        carreraDiv.innerHTML = `
-            <img src="${carrera.imagen}">
-            <hr>
-            <p>${carrera.nombre}</p>
-            <p>
-              <i class="fa-solid fa-location-dot"></i>
-              <span class="carrera-localizacion">${carrera.localizacion}</span>
-              
-              &nbsp;
-              
-              <i class="fa-solid fa-calendar"></i>
-              <span class="carrera-fecha">${carrera.fecha}</span>
-              
-              &nbsp;
-              
-              <i class="fa-solid fa-person-running"></i>
-              <span class="carrera-distancia">${carrera.distancia}km</span>
-            </p>
-        `;
-        carreraDiv.addEventListener("click", () => {
-          window.location.href = `carrera.html?carrera=${encodeURIComponent(carrera.nombre)}`;
-        });
-        carrerasContainer.appendChild(carreraDiv);
+  // Función para mostrar carreras según la paginación
+  let mostrarCarreras = (carreras) => {
+    // Limpia el contenedor de carreras antes de mostrar nuevas carreras
+    let carrerasContainer = document.querySelector(".carreras-container");
+    carrerasContainer.innerHTML = "";
+
+    if (!carreras || carreras.length === 0) {
+      console.error("No se recibieron datos de carreras desde la API");
+      return;
+    }
+
+    // Calcula el índice inicial y final para mostrar en esta página
+    let startIndex = (currentPage - 1) * pageSize;
+    let endIndex = Math.min(startIndex + pageSize, carreras.length);
+
+    // Muestra las carreras en la página actual
+    for (let i = startIndex; i < endIndex; i++) {
+      let carrera = carreras[i];
+      let carreraDiv = document.createElement("div");
+      carreraDiv.classList.add("carrera");
+      carreraDiv.innerHTML = `
+          <img src="../IMAGENES/defecto.jpg">
+          <hr>
+          <p>${carrera.nombre}</p>
+          <p>
+            <i class="fa-solid fa-location-dot"></i>
+            <span class="carrera-localizacion">${carrera.localizacion}</span>
+            
+            &nbsp;
+            
+            <i class="fa-solid fa-calendar"></i>
+            <span class="carrera-fecha">${carrera.fecha}</span>
+            
+            &nbsp;
+            
+            <i class="fa-solid fa-person-running"></i>
+            <span class="carrera-distancia">${carrera.distancia}km</span>
+          </p>
+      `;
+      carreraDiv.addEventListener("click", () => {
+        window.location.href = `carrera.html?carrera=${encodeURIComponent(
+          carrera.nombre
+        )}`;
       });
-    };
-    
-  // Obtener datos desde ccaa.json
-  fetch("./ccaa.json")
+
+      carrerasContainer.appendChild(carreraDiv);
+    }
+  };
+
+  // Función de búsqueda
+  let buscarCarreras = () => {
+    let nombreCarrera = document
+      .getElementById("nombrecarrera")
+      .value.toLowerCase();
+    let provinciaSeleccionada = document
+      .getElementById("provinciaInput")
+      .value.toLowerCase();
+
+    let carreras = document.querySelectorAll(".carrera");
+    carreras.forEach((carrera) => {
+      let nombre = carrera
+        .querySelector("p:nth-child(3)")
+        .innerText.toLowerCase();
+      let localizacion = carrera
+        .querySelector(".carrera-localizacion")
+        .innerText.toLowerCase();
+      if (
+        nombre.includes(nombreCarrera) &&
+        localizacion.includes(provinciaSeleccionada)
+      ) {
+        carrera.style.display = "block";
+      } else {
+        carrera.style.display = "none";
+      }
+    });
+  };
+
+
+
+  // Obtener datos desde provincias.json
+  fetch("../provincias.json")
     .then((response) => response.json())
     .then((data) => {
-      let datalist = document.getElementById("comunidades");
+      let inputProvincia = document.getElementById("provinciaInput");
+      let datalist = document.getElementById("provinciasList");
 
-      data.forEach((comunidades) => {
+      // Agregar la clase al input
+      inputProvincia.classList.add("carrera-provincia");
+
+      // Limpiar el datalist antes de agregar nuevas opciones
+      datalist.innerHTML = "";
+
+      // Agregar opciones al datalist
+      data.forEach((provincia) => {
         let option = document.createElement("option");
-        option.value = comunidades.label;
+        option.value = provincia.label;
         datalist.appendChild(option);
       });
     })
-    .catch((error) =>
-      console.error("Error al cargar las comunidades autonomas:", error)
-    );
+    .catch((error) => console.error("Error al cargar las provincias:", error));
+
+  // Evento para el botón de búsqueda
+  let buscarButton = document.getElementById("buscar");
+  buscarButton.addEventListener("click", buscarCarreras);
 
   // Verificar si el token existe y no ha expirado
   if (token !== null && !TokenExpirado(token)) {
@@ -219,4 +275,27 @@ document.addEventListener("DOMContentLoaded", function () {
     let partesFecha = fechaString.split("/");
     return new Date(partesFecha[2], partesFecha[1] - 1, partesFecha[0]);
   }
+
+  // Event listeners para los botones de paginación
+  document.getElementById("prevPage").addEventListener("click", goToPrevPage);
+  document.getElementById("nextPage").addEventListener("click", goToNextPage);
+
+  // Función para ir a la página anterior
+  function goToPrevPage() {
+      if (currentPage > 1) {
+          currentPage--;
+          mostrarCarreras(data); // Utiliza la variable global data
+      }
+  }
+
+  // Función para ir a la página siguiente
+  function goToNextPage() {
+      let totalPages = Math.ceil(data.length / pageSize); // Utiliza la variable global data
+      if (currentPage < totalPages) {
+          currentPage++;
+          mostrarCarreras(data); // Utiliza la variable global data
+      }
+  }
+
+
 });

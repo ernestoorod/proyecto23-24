@@ -18,10 +18,11 @@
         </div>
 
         <form class="busqueda">
-            <h1 id="h1">BUSQUEDA</h1><br>
+            <a href="./principal.html"><h1 id="h1">BUSQUEDA</h1></a><br>
             <input type="text" name="nombrecarrera" id="nombrecarrera" placeholder="Nombre de la carrera...">
-            <input type="text" id="ccaa" name="comunidades" list="comunidades" placeholder="Comunidades Autonomas" required>
-            <datalist id="comunidades"></datalist>
+            <input type="text" id="provinciaInput" name="provincias" list="provinciasList" placeholder="Busca por provincias" required>
+            <datalist id="provinciasList"></datalist>
+
             <input type="button" id="buscar" value="Buscar">
         </form>
         
@@ -55,9 +56,12 @@
     </div>
 
     <div class="carreras-container"></div>
+
+    <div class="pagination">
+        <button class="pagination-button" id="prevPage">Prev</button>
+        <button class="pagination-button" id="nextPage">Next</button>
+    </div>
     
     <script src="./JS/principal.js"></script>
-
-    <p id="falta">FALTA LA BUSQUEDA / LA LOGICA DE LA BUSQUEDA /LAS IMAGENES DE LA CARRERA / ARREGLAR EL ORDEN (EL DOBLE CLICK)</p>
 </body>
 </html>

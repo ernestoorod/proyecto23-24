@@ -50,6 +50,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         <span class="carrera-distancia">${carrera.distancia}km</span>
                     </p>
                 `;
+                // Agregar evento de clic para redireccionar a editarCarrera.html
+                carreraDiv.addEventListener("click", function() {
+                    window.location.href = "editarcarrera.html?nombre=" + carrera.nombre;
+                });
                 carrerasContainer.appendChild(carreraDiv);
             });
         };

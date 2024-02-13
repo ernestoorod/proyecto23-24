@@ -2,6 +2,24 @@ document.addEventListener("DOMContentLoaded", function () {
     let urlParams = new URLSearchParams(window.location.search);
     let carreraNombre = urlParams.get("carrera");
     let token = localStorage.getItem("miToken");
+    let btnPerfil = document.getElementById("fotoperfil");
+    let iniciosesion = document.getElementById("iniciosesion");
+    let iniciarsesion = document.getElementById("iniciarsesion");
+    let apuntarme = document.getElementById("apuntarme");
+    let detallesCarrera = document.getElementById("detallescarrera");
+
+    // Mostrar foto de perfil o botón de inicio de sesión según la existencia del token
+    if (token != null) {
+        btnPerfil.style.display = "block";
+        iniciosesion.style.display = "none";
+        apuntarme.style.display = "block";
+        iniciarsesion.style.display = "none";
+    } else {
+        btnPerfil.style.display = "none";
+        iniciosesion.style.display = "block";
+        apuntarme.style.display = "none";
+        iniciarsesion.style.display = "block";
+    }
 
     document.getElementById("nombreCarrera").innerText = carreraNombre;
 
@@ -13,6 +31,19 @@ document.addEventListener("DOMContentLoaded", function () {
             '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(map);
 
+    let gpx = '../GPX/X_Trail_Balboa.gpx'; 
+
+    new L.GPX(gpx, {
+        async: true,
+        polyline_options: {
+            color: 'red',
+            opacity: 0.75,
+            weight: 3
+        }
+    }).on('loaded', function (e) {
+        map.fitBounds(e.target.getBounds());
+    }).addTo(map);
+
     // Obtener datos desde carrera.php
     fetch("./PHP/carrera.php", {
         method: "GET",
@@ -22,9 +53,8 @@ document.addEventListener("DOMContentLoaded", function () {
     })
         .then((response) => response.json())
         .then((responseData) => {
-            data = responseData;
-            console.log(data);
-            mostrarDetallesCarrera(data, carreraNombre);
+            // Luego de obtener los datos, mostrar los detalles de la carrera
+            mostrarDetallesCarrera(responseData, carreraNombre);
         })
         .catch((error) => {
             console.error("Error al cargar datos desde la API:", error);
@@ -32,25 +62,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Función para mostrar los detalles de la carrera correspondiente al nombre proporcionado
     function mostrarDetallesCarrera(carreras, nombre) {
-        var detallescarrera = document.getElementById('detallescarrera');
-        detallescarrera.innerHTML = ''; // Limpiar el contenido anterior
+        detallesCarrera.innerHTML = ''; // Limpiar el contenido anterior
 
         var html = '';
         var carrera = carreras.find(carrera => carrera.nombre === nombre);
         if (carrera) {
+            html += '<div class="detalle-carrera">';
+            html += '<img src="./IMAGENES/defecto.jpg" class="detalle-carrera-img"></img>';
+            html += '<div class="detalle-carrera-info">';
             html += '<ul>';
             html += '<li>';
-            html += '<strong>Nombre:</strong> ' + carrera.nombre + '<br>';
-            html += '<strong>Localización:</strong> ' + carrera.localizacion + '<br>';
-            html += '<strong>Fecha:</strong> ' + carrera.fecha + '<br>';
-            html += '<strong>Distancia:</strong> ' + carrera.distancia + '<br>';
-            html += '<strong>Desnivel:</strong> ' + carrera.desnivel + '<br>';
+            html += '<strong>Nombre:</strong> <span class="detalle-carrera-nombre">' + carrera.nombre + '</span><br>';
+            html += '<strong>Localización:</strong> <span class="detalle-carrera-localizacion">' + carrera.localizacion + '</span><br>';
+            html += '<strong>Fecha:</strong> <span class="detalle-carrera-fecha">' + carrera.fecha + '</span><br>';
+            html += '<strong>Distancia:</strong> <span class="detalle-carrera-distancia">' + carrera.distancia + 'km</span><br>';
+            html += '<strong>Desnivel:</strong> <span class="detalle-carrera-desnivel">' + carrera.desnivel + '</span><br>';
             html += '</li>';
             html += '</ul>';
+            html += '</div>';
+            html += '</div>';
         } else {
             html = '<p>No se encontró la carrera con nombre ' + nombre + '</p>';
         }
-        detallescarrera.innerHTML = html;
+        detallesCarrera.innerHTML = html;
     }
 
     // Función para verificar si el token ha expirado
@@ -83,19 +117,15 @@ document.addEventListener("DOMContentLoaded", function () {
         return JSON.parse(cargaPayloadJson);
     }
 
+    // Función para obtener el ID de usuario desde el token
     function obtenerIDUsuarioDesdeToken(token) {
         let tokenDecodificado = decodificarJWT(token);
-        return tokenDecodificado.id; 
+        return tokenDecodificado.id;
     }
 
-    document.getElementById("login-container").style.display = "none";
-
-if (token !== null && !TokenExpirado(token)) {
-    document.getElementById('apuntarme').addEventListener('click', function() {
-        // Obtener el nombre de la carrera desde la URL
-        let urlParams = new URLSearchParams(window.location.search);
-        let carreraNombre = urlParams.get("carrera");
-
+    // Evento click en el botón "Apuntarme"
+    apuntarme.addEventListener('click', function () {
+        // Verificar si el token existe
         if (!token) {
             window.location.href = '../iniciarsesion.html';
         } else {
@@ -114,23 +144,25 @@ if (token !== null && !TokenExpirado(token)) {
                 modal.style.display = 'block';
             }
         }
-    }); 
-    
-    document.getElementById('aceptar').addEventListener('click', function() {
-        document.getElementById('modal').style.display = 'none';
     });
 
-    document.getElementById('close').addEventListener('click', function() {
-        document.getElementById('modal').style.display = 'none';
+    // Evento click en el botón "Aceptar" del modal
+    document.getElementById('aceptar').addEventListener('click', function () {
+        document.getElementById('modal').style.display = 'none'; // Ocultar el modal
     });
 
-} else {
-    document.getElementById('apuntarme').style.display = 'none';
-    document.getElementById('modal').style.display = 'none';
-    document.getElementById("login-container").style.display = "block";
-}
+    // Evento click en el botón "Cerrar" del modal
+    document.getElementById('close').addEventListener('click', function () {
+        document.getElementById('modal').style.display = 'none'; // Ocultar el modal
+    });
 
-    
-    
+    // Evento click en el botón de perfil
+    btnPerfil.addEventListener("click", () => {
+        window.location.href = "../perfil.html"; // Redirigir a la página de perfil
+    });
 
+    // Eliminar token si index.html está en la URL
+    if (window.location.href.includes("index.html")) {
+        localStorage.removeItem("miToken");
+    }
 });

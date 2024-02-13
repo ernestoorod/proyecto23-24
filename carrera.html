@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrera</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-gpx/gpx.js"></script>
+    <script src="https://kit.fontawesome.com/aa947686fa.js" crossorigin="anonymous"></script>
+   
     <link rel="stylesheet" href="./CSS/carrera.css">
 </head>
 <body>
@@ -13,18 +16,22 @@
         <a href="./index.html"><img src="./IMAGENES/logo.ico" id="fotologo"></a>
     </div>
 
+    <a href="./principal.html" class="home-icon"><i class="fas fa-home"></i></a>
+
+    <img src="./IMAGENES/logo.jpg" id="fotoperfil" class="top-right">
+    <a href="./iniciarsesion.html" id="iniciosesion" class="top-right" ><button>
+        <p>INICIAR SESION</p>
+    </button></a>
+
     <h1 id="nombreCarrera"></h1>
     <div id="map"></div>
-    <div id="detallescarrera"></div>
+    <div id="detallescarrera" class="detalle-carrera"></div>
+
 
     <div class="container">
         <p>¿QUIERES APUNTARTE?</p>
         <input type="button" id="apuntarme" value="APUNTARME">
-        <div class="iniciarsesion" id="login-container">
-            <a href="./iniciarsesion.html"><button>
-                <p>INICIAR SESION</p>
-            </button></a>
-        </div>
+        <p id="iniciarsesion">TIENES QUE <a href="./iniciarsesion.html">INICIAR SESION</a> PARA PODER APUNTARTE A UNA CARRERA</p>
     </div>
     
     <div class="modal" id="modal">
@@ -33,9 +40,9 @@
           <p id="carrera"></p>
           <p id="mensaje"></p>
           <button id="aceptar">Aceptar</button>
+          
         </div>
     </div>
-
     <div id="tiempo"></div>
     
 <script src="./JS/carrera.js"></script>

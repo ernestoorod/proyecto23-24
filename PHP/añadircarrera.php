@@ -4,29 +4,21 @@ require_once 'conexion.php';
 $con = new Conexion();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $json_data = file_get_contents("php://input");
+    $expected_params = array('IDusuario', 'nombre', 'localizacion', 'distancia', 'fecha', 'desnivel');
+    $missing_params = array_diff($expected_params, array_keys($_POST));
 
-    $data = json_decode($json_data, true);
-
-    if (
-        isset($data['IDusuario']) &&
-        isset($data['nombre']) &&
-        isset($data['localizacion']) &&
-        isset($data['distancia']) &&
-        isset($data['fecha']) &&
-        isset($data['desnivel'])
-    ) {
-        $IDusuario = $data['IDusuario'];
-        $nombre = $data['nombre'];
-        $localizacion = $data['localizacion'];
-        $distancia = $data['distancia'];
-        $fecha = $data['fecha'];
-        $desnivel = $data['desnivel'];
-    } else {
-        header("HTTP/1.1 400 Bad Request");
+    if (!empty($missing_params)) {
+        header("HTTP/1.1 433 Bad Request");
         echo json_encode(['success' => false, 'error' => 'Faltan parámetros']);
         exit;
     }
+
+    $IDusuario = $_POST['IDusuario'];
+    $nombre = $_POST['nombre'];
+    $localizacion = $_POST['localizacion'];
+    $distancia = $_POST['distancia'];
+    $fecha = $_POST['fecha'];
+    $desnivel = $_POST['desnivel'];
 
     $sql = "INSERT INTO carreras (IDusuario, nombre, localizacion, distancia, fecha, desnivel) 
             VALUES ('$IDusuario', '$nombre', '$localizacion', '$distancia', '$fecha', '$desnivel')";
@@ -39,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     } catch (mysqli_sql_exception $e) {
         header("HTTP/1.1 400 Bad Request");
-        echo json_encode(['success' => false, 'error' => 'Error al crear carrera']);
+        echo json_encode(['success' => false, 'error' => 'Error al crear carrera: ' . $e->getMessage()]);
         exit;
     }
 } else {

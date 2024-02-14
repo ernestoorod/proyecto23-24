@@ -78,6 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 desnivel: desnivel
             })
         })
+
         .then(response => response.json())
         .then(data => {
             if (data.success) {

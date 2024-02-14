@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-
     let token = localStorage.getItem('miToken');
     let userId = IDusuario(token);
-
     console.log(userId);
 
     document.getElementById('btn-crear').addEventListener('click', function() {
@@ -21,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
         formDataCarrera.append('desnivel', desnivel);
         formDataCarrera.append('IDusuario', userId);
 
-        // Solicitud POST para crear la carrera
         fetch('../PHP/añadircarrera.php', {
             method: 'POST',
             body: formDataCarrera,
@@ -34,11 +31,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Obtener el archivo GPX seleccionado por el usuario
                 let gpxFile = document.getElementById('gpx').files[0];
+                let imagenFile = document.getElementById('imagen').files[0];
 
                 // Objeto FormData para enviar el archivo GPX
                 let formDataGPX = new FormData();
                 formDataGPX.append('gpx', gpxFile);
                 formDataGPX.append('nombre_carrera', carreraNombre); // Pasar el nombre de la carrera
+
+                // Objeto FormData para enviar la imagen
+                let formDataImagen = new FormData();
+                formDataImagen.append('imagen', imagenFile);
+                formDataImagen.append('nombre_carrera', carreraNombre); // Pasar el nombre de la carrera
 
                 // Solicitud POST para enviar el archivo GPX
                 fetch('../PHP/rutagpx.php', {
@@ -49,12 +52,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(data => {
                     if (data.success) {
                         console.log('Archivo GPX enviado con éxito.');
-                        window.location.href = "../principal.html";
+                        // Después de enviar el archivo GPX, enviar la imagen
+                        fetch('../PHP/imagen.php', {
+                            method: 'POST',
+                            body: formDataImagen,
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                console.log('Imagen enviada con éxito.');
+                                window.location.href = "../principal.html";
+                            } else {
+                                console.log('Error al enviar la imagen: ' + data.error);
+                            }
+                        })
+                        .catch(error => console.error('Error al enviar la imagen:', error));
                     } else {
                         console.log('Error al enviar archivo GPX: ' + data.error);
                     }
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => console.error('Error al enviar archivo GPX:', error));
 
             } else {
                 console.log('Error al crear carrera: ' + data.error);
@@ -62,12 +79,12 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => console.error('Error:', error));
     });
-    
+
     function IDusuario(token) {
         let tokenDecodificado = decodificarJWT(token);
         return tokenDecodificado.id;
     }
-    
+
     function decodificarJWT(token) {
         let base64Url = token.split('.')[1];
         let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -76,5 +93,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }).join(''));
         return JSON.parse(cargaPayloadJson);
     }
-
 });

@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 return response.json();
             })
             .then(data => {
+                holaUsuarioElemento.textContent = 'Hola, ' + data.username;
+
                 console.log('Datos del usuario:', data);
 
                 if (data.telefono && data.club) {
@@ -42,8 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (token !== null && !TokenExpirado(token)){     
 
-        holaUsuarioElemento.textContent = 'Hola, ' + nombreUsuario;
-
+        
         console.log(decodificarJWT(token));
 
     } else {

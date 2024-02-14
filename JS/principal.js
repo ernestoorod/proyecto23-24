@@ -29,28 +29,83 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Error al cargar datos desde la API:", error);
     });
 
-  // Función para mostrar carreras según la paginación
-  let mostrarCarreras = (carreras) => {
-    // Limpia el contenedor de carreras antes de mostrar nuevas carreras
-    let carrerasContainer = document.querySelector(".carreras-container");
-    carrerasContainer.innerHTML = "";
+ // Función para mostrar carreras según la paginación
+let mostrarCarreras = (carreras) => {
+  // Limpia el contenedor de carreras antes de mostrar nuevas carreras
+  let carrerasContainer = document.querySelector(".carreras-container");
+  carrerasContainer.innerHTML = "";
 
-    if (!carreras || carreras.length === 0) {
-      console.error("No se recibieron datos de carreras desde la API");
-      return;
-    }
+  if (!carreras || carreras.length === 0) {
+    console.error("No se recibieron datos de carreras desde la API");
+    return;
+  }
 
-    // Calcula el índice inicial y final para mostrar en esta página
-    let startIndex = (currentPage - 1) * pageSize;
-    let endIndex = Math.min(startIndex + pageSize, carreras.length);
+  // Calcula el índice inicial y final para mostrar en esta página
+  let startIndex = (currentPage - 1) * pageSize;
+  let endIndex = Math.min(startIndex + pageSize, carreras.length);
 
-    // Muestra las carreras en la página actual
-    for (let i = startIndex; i < endIndex; i++) {
-      let carrera = carreras[i];
-      let carreraDiv = document.createElement("div");
-      carreraDiv.classList.add("carrera");
-      carreraDiv.innerHTML = `
-          <img src="../IMAGENES/defecto.jpg">
+  // Muestra las carreras en la página actual
+  for (let i = startIndex; i < endIndex; i++) {
+    let carrera = carreras[i];
+    let carreraDiv = document.createElement("div");
+    carreraDiv.classList.add("carrera");
+
+    // Obtener la imagen de la carrera desde la API
+    fetch("../PHP/archivosimagenes.php?nombre_carrera=" + encodeURIComponent(carrera.nombre))
+      .then(response => response.json())
+      .then(data => {
+        if (data.success && data.gpxData.length > 0) {
+          let imageFileName = data.gpxData[0].imageFileName; // Suponiendo que solo obtienes un archivo de imagen por carrera
+          let imageUrl = `../IMAGENES_CARRERAS/${imageFileName}`; // Construir la URL de la imagen
+          carreraDiv.innerHTML = `
+            <img src="${imageUrl}">
+            <hr>
+            <p>${carrera.nombre}</p>
+            <p>
+              <i class="fa-solid fa-location-dot"></i>
+              <span class="carrera-localizacion">${carrera.localizacion}</span>
+              
+              &nbsp;
+              
+              <i class="fa-solid fa-calendar"></i>
+              <span class="carrera-fecha">${carrera.fecha}</span>
+              
+              &nbsp;
+              
+              <i class="fa-solid fa-person-running"></i>
+              <span class="carrera-distancia">${carrera.distancia}km</span>
+            </p>
+          `;
+        } else {
+          // Si no se encuentra ninguna imagen, usar una imagen por defecto
+          let imageUrl = "../IMAGENES_CARRERAS/default.jpg"; // URL de la imagen por defecto
+          carreraDiv.innerHTML = `
+            <img src="${imageUrl}">
+            <hr>
+            <p>${carrera.nombre}</p>
+            <p>
+              <i class="fa-solid fa-location-dot"></i>
+              <span class="carrera-localizacion">${carrera.localizacion}</span>
+              
+              &nbsp;
+              
+              <i class="fa-solid fa-calendar"></i>
+              <span class="carrera-fecha">${carrera.fecha}</span>
+              
+              &nbsp;
+              
+              <i class="fa-solid fa-person-running"></i>
+              <span class="carrera-distancia">${carrera.distancia}km</span>
+            </p>
+          `;
+        }
+      })
+      .catch(error => {
+        console.error('Error al obtener datos de la imagen de la carrera:', error);
+        // Si hay un error, mostrar una imagen por defecto
+        let imageUrl = "../IMAGENES_CARRERAS/default.jpg"; // URL de la imagen por defecto
+        carreraDiv.innerHTML = `
+          <img src="${imageUrl}">
           <hr>
           <p>${carrera.nombre}</p>
           <p>
@@ -67,16 +122,19 @@ document.addEventListener("DOMContentLoaded", function () {
             <i class="fa-solid fa-person-running"></i>
             <span class="carrera-distancia">${carrera.distancia}km</span>
           </p>
-      `;
-      carreraDiv.addEventListener("click", () => {
-        window.location.href = `carrera.html?carrera=${encodeURIComponent(
-          carrera.nombre
-        )}`;
+        `;
       });
 
-      carrerasContainer.appendChild(carreraDiv);
-    }
-  };
+    carreraDiv.addEventListener("click", () => {
+      window.location.href = `carrera.html?carrera=${encodeURIComponent(
+        carrera.nombre
+      )}`;
+    });
+
+    carrerasContainer.appendChild(carreraDiv);
+  }
+};
+
 
 
   let buscarCarreras = () => {
@@ -297,5 +355,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
   }
 
+  
 
 });

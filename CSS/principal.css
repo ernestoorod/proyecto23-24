@@ -16,6 +16,14 @@ body {
     position: relative;
 }
 
+#area-blanca {
+    position: absolute;
+        top: 21px;
+        left: 90px;
+    color: white;
+    font-size: 50px;
+}
+
 #fotoperfil,
 #logout {
     width: 50px;
@@ -29,6 +37,8 @@ body {
     right: 70px;
     border-radius: 50%;
 }
+
+
 
 #logout {
     right: 10px;

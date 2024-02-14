@@ -112,9 +112,16 @@ function borrarCuenta() {
     .then(data => {
         if (data.success) {
             console.log("Cuenta eliminada exitosamente");
-            localStorage.removeItem("miToken");
-            window.location.href = "../index.html";
-            // Redireccionar a la página de inicio o mostrar un mensaje de éxito
+            // Ahora, eliminar las imágenes asociadas a las carreras del usuario
+            eliminarImagenes()
+                .then(() => {
+                    localStorage.removeItem("miToken");
+                    window.location.href = "../index.html";
+                })
+                .catch(error => {
+                    console.error("Error al eliminar las imágenes:", error);
+                    // Mostrar un mensaje de error al usuario
+                });
         } else {
             console.error("Error al eliminar la cuenta:", data.error);
             // Mostrar un mensaje de error al usuario
@@ -125,4 +132,30 @@ function borrarCuenta() {
         // Mostrar un mensaje de error al usuario
     });
 
+};
+
+function eliminarImagenes() {
+    return new Promise((resolve, reject) => {
+        let token = localStorage.getItem("miToken");
+        if (!token) {
+            reject("No hay token almacenado en localStorage");
+            return;
+        }
+
+        fetch("./PHP/editar.php?miToken=" + token + "&borrarImagenes=true", {
+            method: "DELETE"
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log("Imágenes eliminadas exitosamente");
+                resolve();
+            } else {
+                reject("Error al eliminar las imágenes: " + data.error);
+            }
+        })
+        .catch(error => {
+            reject("Error al eliminar las imágenes: " + error);
+        });
+    });
 };

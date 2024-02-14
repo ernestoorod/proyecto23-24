@@ -47,29 +47,59 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("Error al cargar datos desde la API:", error);
         });
 
-    // Función para mostrar los detalles de la carrera correspondiente al nombre proporcionado
     function mostrarDetallesCarrera(carreras, nombre) {
         detallesCarrera.innerHTML = ''; // Limpiar el contenido anterior
 
         var html = '';
-        var carrera = carreras.find(carrera => carrera.nombre === nombre);
+        var carrera = carreras.find(carrera => carrera.nombre == nombre);
         if (carrera) {
             html += '<div class="detalle-carrera">';
-            html += '<img src="./IMAGENES/defecto.jpg" class="detalle-carrera-img"></img>';
-            html += '<div class="detalle-carrera-info">';
-            html += '<ul>';
-            html += '<li>';
-            html += '<strong>Nombre:</strong> <span class="detalle-carrera-nombre">' + carrera.nombre + '</span><br>';
-            html += '<strong>Localización:</strong> <span class="detalle-carrera-localizacion">' + carrera.localizacion + '</span><br>';
-            html += '<strong>Fecha:</strong> <span class="detalle-carrera-fecha">' + carrera.fecha + '</span><br>';
-            html += '<strong>Distancia:</strong> <span class="detalle-carrera-distancia">' + carrera.distancia + 'km</span><br>';
-            html += '<strong>Desnivel:</strong> <span class="detalle-carrera-desnivel">' + carrera.desnivel + '</span><br>';
-            html += '</li>';
-            html += '</ul>';
-            html += '</div>';
-            html += '</div>';
-            
-            
+            // Cargar la imagen desde la API de imágenes
+            fetch("../PHP/archivosimagenes.php?nombre_carrera=" + encodeURIComponent(carrera.nombre))
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.gpxData.length > 0) {
+                        let imageFileName = data.gpxData[0].imageFileName; // Suponiendo que solo obtienes un archivo de imagen por carrera
+                        let imageUrl = `../IMAGENES_CARRERAS/${imageFileName}`; // Construir la URL de la imagen
+                        html += `<img src="${imageUrl}" class="detalle-carrera-img"></img>`;
+                    } else {
+                        html += '<img src="./IMAGENES/defecto.jpg" class="detalle-carrera-img"></img>'; // Si no hay imagen, muestra una por defecto
+                    }
+                    html += '<div class="detalle-carrera-info">';
+                    html += '<ul>';
+                    html += '<li>';
+                    html += '<strong>Nombre:</strong> <span class="detalle-carrera-nombre">' + carrera.nombre + '</span><br>';
+                    html += '<strong>Localización:</strong> <span class="detalle-carrera-localizacion">' + carrera.localizacion + '</span><br>';
+                    html += '<strong>Fecha:</strong> <span class="detalle-carrera-fecha">' + carrera.fecha + '</span><br>';
+                    html += '<strong>Distancia:</strong> <span class="detalle-carrera-distancia">' + carrera.distancia + 'km</span><br>';
+                    html += '<strong>Desnivel:</strong> <span class="detalle-carrera-desnivel">' + carrera.desnivel + '</span><br>';
+                    html += '</li>';
+                    html += '</ul>';
+                    html += '</div>';
+                    html += '</div>';
+                    detallesCarrera.innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Error al obtener datos de la imagen de la carrera:', error);
+                    // Si hay un error al obtener la imagen, muestra una por defecto
+                    html += '<img src="./IMAGENES/defecto.jpg" class="detalle-carrera-img"></img>';
+                    html += '<div class="detalle-carrera-info">';
+                    html += '<ul>';
+                    html += '<li>';
+                    html += '<strong>Nombre:</strong> <span class="detalle-carrera-nombre">' + carrera.nombre + '</span><br>';
+                    html += '<strong>Localización:</strong> <span class="detalle-carrera-localizacion">' + carrera.localizacion + '</span><br>';
+                    html += '<strong>Fecha:</strong> <span class="detalle-carrera-fecha">' + carrera.fecha + '</span><br>';
+                    html += '<strong>Distancia:</strong> <span class="detalle-carrera-distancia">' + carrera.distancia + 'km</span><br>';
+                    html += '<strong>Desnivel:</strong> <span class="detalle-carrera-desnivel">' + carrera.desnivel + '</span><br>';
+                    html += '</li>';
+                    html += '</ul>';
+                    html += '</div>';
+                    html += '</div>';
+                    detallesCarrera.innerHTML = html;
+                });
+
+
+
             // Obtener el nombre del archivo GPX y cargarlo en el mapa
             fetch(`../PHP/archivosgpx.php?nombre_carrera=${nombre}`)
                 .then(response => response.json())

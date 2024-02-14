@@ -69,6 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
             html += '</div>';
             html += '</div>';
             
+            
             // Obtener el nombre del archivo GPX y cargarlo en el mapa
             fetch(`../PHP/archivosgpx.php?nombre_carrera=${nombre}`)
                 .then(response => response.json())

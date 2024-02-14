@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Datos de Usuario</title>
+    <link rel="stylesheet" href="./CSS/editarusuarios.css">
 </head>
 <body>
     <h1>Editar Datos del Usuario</h1>
@@ -16,14 +17,14 @@
         
         <label for="correo">Correo Electrónico:</label><br>
         <input type="email" id="correo" name="correo"><br>
-        
-        <label for="telefono">Teléfono:</label><br>
-        <input type="tel" id="telefono" name="telefono"><br>
-        
+
         <label for="localidad">Localidad:</label><br>
         <input type="text" id="localidad" name="localidad"><br>
         
-        <label for="club">Club:</label><br>
+        <label for="telefono" id="ltelefono">Teléfono:</label><br>
+        <input type="tel" id="telefono" name="telefono"><br>
+        
+        <label for="club" id="lclub">Club:</label><br>
         <input type="text" id="club" name="club"><br>
         
         <button onclick="guardarCambios()">Guardar Cambios</button>

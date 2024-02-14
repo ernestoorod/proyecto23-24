@@ -88,6 +88,7 @@ function guardarCambios() {
     .then(data => {
         if (data.success) {
             console.log("Cambios guardados exitosamente");
+            window.location.href = "../principal.html";
         } else {
             console.error("Error al guardar los cambios:", data.error);
         }
@@ -123,4 +124,5 @@ function borrarCuenta() {
         console.error("Error al eliminar la cuenta:", error);
         // Mostrar un mensaje de error al usuario
     });
+
 };

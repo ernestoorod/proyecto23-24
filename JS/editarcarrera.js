@@ -82,6 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             if (data.success) {
                 console.log("Datos de la carrera editados exitosamente");
+                window.location.href = "../principal.html";
             } else {
                 console.error("Error al editar los datos de la carrera:", data.error);
             }

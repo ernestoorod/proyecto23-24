@@ -3,16 +3,53 @@ document.addEventListener('DOMContentLoaded', function () {
     let holaUsuarioElemento = document.querySelector('.primero');
     let nombreUsuario = ObtenerNombreDeUsuarioDesdeToken(token);
     let logoutButton = document.getElementById("logout");
+    let misCarrerasButton = document.getElementById("btn-mis-carreras");
+    let crearCarreraButton = document.getElementById("btn-abrir-modal");
+    
+    if (token !== null) {
+        fetchUserData(token);
+    } else {
+        console.log('No se ha generado el token');
+    }
+
+    function fetchUserData(token) {
+        fetch('../PHP/organizador.php?miToken=' + token)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error de conexión al servidor. Estado: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Datos del usuario:', data);
+
+                if (data.telefono && data.club) {
+                    // El usuario tiene información de teléfono y club, no hacemos nada
+                } else {
+                    // Ocultar botones si el usuario no tiene información de teléfono y club
+                    if (misCarrerasButton) {
+                        misCarrerasButton.style.display = 'none';
+                    }
+                    if (crearCarreraButton) {
+                        crearCarreraButton.style.display = 'none';
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error.message);
+            });
+    }
 
     if (token !== null && !TokenExpirado(token)){     
 
-    holaUsuarioElemento.textContent = 'Hola, ' + nombreUsuario;
+        holaUsuarioElemento.textContent = 'Hola, ' + nombreUsuario;
 
-    console.log(decodificarJWT(token));
+        console.log(decodificarJWT(token));
 
-    }else {
+    } else {
         console.log('No se ha generado el token o ha expirado');
     };
+
 
     function TokenExpirado(token) {
         let tiempoExpiracion = obtenerTiempoExpiracionDesdeToken(token);

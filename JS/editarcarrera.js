@@ -1,6 +1,45 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const nombreCarrera = urlParams.get('nombre');
+    let dialogo = document.getElementById('modal');
+    let btnBorrarCarrera = document.getElementById('btn-borrar-carrera');
+    let btnCancelar = document.getElementById('btn-cancelar');
+    let btnBorrar = document.getElementById('btn-borrar');
+    let urlParams = new URLSearchParams(window.location.search);
+    let nombreCarrera = urlParams.get('nombre');
+
+    btnBorrarCarrera.addEventListener('click', () => {
+        dialogo.showModal();
+    });
+
+    btnCancelar.addEventListener('click', () => {
+        dialogo.close();
+    });
+
+    btnBorrar.addEventListener('click', () => {
+        console.log('Borrando carrera...');
+        fetch("../PHP/editarcarrera.php?nombre=" + nombreCarrera, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log("Carrera borrada exitosamente");
+                window.location.href = "../principal.html";
+            } else {
+                console.error("Error al borrar la carrera:", data.error);
+            }
+        })
+        .catch(error => {
+            console.error("Error al borrar la carrera:", error);
+        });
+        dialogo.close();
+    });
+
+    if (window.location.href.includes("index.html")) {
+        localStorage.removeItem("miToken");
+    }
 
     document.getElementById("nombre").value = nombreCarrera;
 

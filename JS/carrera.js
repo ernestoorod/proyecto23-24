@@ -31,20 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
             '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(map);
 
-    let gpx = '../GPX/X_Trail_Balboa.gpx'; 
-
-    new L.GPX(gpx, {
-        async: true,
-        polyline_options: {
-            color: 'red',
-            opacity: 0.75,
-            weight: 3
-        }
-    }).on('loaded', function (e) {
-        map.fitBounds(e.target.getBounds());
-    }).addTo(map);
-
-    // Obtener datos desde carrera.php
+    // Obtener datos desde carrera.php y cargar el GPX correspondiente
     fetch("./PHP/carrera.php", {
         method: "GET",
         headers: {
@@ -81,6 +68,32 @@ document.addEventListener("DOMContentLoaded", function () {
             html += '</ul>';
             html += '</div>';
             html += '</div>';
+            
+            // Obtener el nombre del archivo GPX y cargarlo en el mapa
+            fetch(`../PHP/archivosgpx.php?nombre_carrera=${nombre}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const gpxFileName = data.gpxData[0].gpxFileName;
+                        const gpxFilePath = `../GPX/${gpxFileName}`;
+
+                        new L.GPX(gpxFilePath, {
+                            async: true,
+                            polyline_options: {
+                                color: 'red',
+                                opacity: 0.75,
+                                weight: 3
+                            }
+                        }).on('loaded', function (e) {
+                            map.fitBounds(e.target.getBounds());
+                        }).addTo(map);
+                    } else {
+                        throw new Error('No se pudo obtener el nombre del archivo GPX');
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                });
         } else {
             html = '<p>No se encontró la carrera con nombre ' + nombre + '</p>';
         }

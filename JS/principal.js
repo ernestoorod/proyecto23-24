@@ -78,13 +78,16 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
-  // Función de búsqueda
+
   let buscarCarreras = () => {
     let nombreCarrera = document
       .getElementById("nombrecarrera")
       .value.toLowerCase();
     let provinciaSeleccionada = document
       .getElementById("provinciaInput")
+      .value.toLowerCase();
+      let distancia = document
+      .getElementById("distanciaInput")
       .value.toLowerCase();
 
     let carreras = document.querySelectorAll(".carrera");
@@ -97,7 +100,8 @@ document.addEventListener("DOMContentLoaded", function () {
         .innerText.toLowerCase();
       if (
         nombre.includes(nombreCarrera) &&
-        localizacion.includes(provinciaSeleccionada)
+        localizacion.includes(provinciaSeleccionada) &&
+        localizacion.includes(distancia)
       ) {
         carrera.style.display = "block";
       } else {

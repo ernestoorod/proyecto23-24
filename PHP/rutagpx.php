@@ -6,13 +6,13 @@ $con = new Conexion();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($_FILES['gpx']['error'] === UPLOAD_ERR_OK) {
         $gpxFileName = $_FILES['gpx']['name'];
-        $id_carrera = $_POST['id_carrera'];
-        
-        $uploadDirectory = '../IMAGENES/';
+        $nombre_carrera = $_POST['nombre_carrera']; // Cambio aquí para obtener el nombre de la carrera
+
+        $uploadDirectory = '../GPX/';
         move_uploaded_file($_FILES['gpx']['tmp_name'], $uploadDirectory . $gpxFileName);
 
-        $sql = "INSERT INTO gpx_archivos (id_carrera, gpxFileName) 
-                VALUES ('$id_carrera', '$gpxFileName')";
+        $sql = "INSERT INTO gpx_archivos (nombre_carrera, gpxFileName) 
+                VALUES ('$nombre_carrera', '$gpxFileName')"; // Cambio aquí para utilizar el nombre de la carrera en lugar del ID
 
         try {
             $con->query($sql);

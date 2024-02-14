@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     btnBorrar.addEventListener('click', () => {
-        console.log('Cuenta borrada');
-        dialogo.close();
+        borrarCuenta();
+        
     });
 
 
@@ -94,5 +94,33 @@ function guardarCambios() {
     })
     .catch(error => {
         console.error("Error al guardar los cambios:", error);
+    });
+};
+
+function borrarCuenta() {
+    let token = localStorage.getItem("miToken");
+    if (!token) {
+        console.error("No hay token almacenado en localStorage");
+        return;
+    }
+
+    fetch("./PHP/editar.php?miToken=" + token, {
+        method: "DELETE"
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log("Cuenta eliminada exitosamente");
+            localStorage.removeItem("miToken");
+            window.location.href = "../index.html";
+            // Redireccionar a la página de inicio o mostrar un mensaje de éxito
+        } else {
+            console.error("Error al eliminar la cuenta:", data.error);
+            // Mostrar un mensaje de error al usuario
+        }
+    })
+    .catch(error => {
+        console.error("Error al eliminar la cuenta:", error);
+        // Mostrar un mensaje de error al usuario
     });
 };

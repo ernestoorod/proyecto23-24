@@ -29,8 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                let carreraId = data.carreraId;
-                console.log('Carrera creada con éxito. ID de carrera: ' + carreraId);
+                let carreraNombre = nombre; // Obtener el nombre de la carrera
+                console.log('Carrera creada con éxito. Nombre de carrera: ' + carreraNombre);
 
                 // Obtener el archivo GPX seleccionado por el usuario
                 let gpxFile = document.getElementById('gpx').files[0];
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Objeto FormData para enviar el archivo GPX
                 let formDataGPX = new FormData();
                 formDataGPX.append('gpx', gpxFile);
-                formDataGPX.append('id_carrera', carreraId); // Pasar el ID de la carrera
+                formDataGPX.append('nombre_carrera', carreraNombre); // Pasar el nombre de la carrera
 
                 // Solicitud POST para enviar el archivo GPX
                 fetch('../PHP/rutagpx.php', {
@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(data => {
                     if (data.success) {
                         console.log('Archivo GPX enviado con éxito.');
+                        window.location.href = "../principal.html";
                     } else {
                         console.log('Error al enviar archivo GPX: ' + data.error);
                     }

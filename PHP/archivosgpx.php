@@ -4,11 +4,10 @@ require_once 'conexion.php';
 $con = new Conexion();
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    if (isset($_GET['id_carrera'])) {
-        $idCarrera = $_GET['id_carrera'];
+    if (isset($_GET['nombre_carrera'])) {
+        $nombreCarrera = $_GET['nombre_carrera'];
         
-        // Consulta SQL para seleccionar los datos de los archivos GPX asociados a la carrera específica
-        $sql = "SELECT id, id_carrera, gpxFileName FROM gpx_archivos WHERE id_carrera = '$idCarrera'";
+        $sql = "SELECT gpxFileName FROM gpx_archivos WHERE nombre_carrera = '$nombreCarrera'"; 
         
         try {
             $result = $con->query($sql);
@@ -25,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         }
     } else {
         header("HTTP/1.1 400 Bad Request");
-        echo json_encode(['success' => false, 'error' => 'No se proporcionó el ID de la carrera.']);
+        echo json_encode(['success' => false, 'error' => 'No se proporcionó el nombre de la carrera.']);
         exit;
     }
 } else {

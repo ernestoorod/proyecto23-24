@@ -86,9 +86,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let provinciaSeleccionada = document
       .getElementById("provinciaInput")
       .value.toLowerCase();
-      let distancia = document
-      .getElementById("distanciaInput")
-      .value.toLowerCase();
 
     let carreras = document.querySelectorAll(".carrera");
     carreras.forEach((carrera) => {
@@ -100,8 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .innerText.toLowerCase();
       if (
         nombre.includes(nombreCarrera) &&
-        localizacion.includes(provinciaSeleccionada) &&
-        localizacion.includes(distancia)
+        localizacion.includes(provinciaSeleccionada)
       ) {
         carrera.style.display = "block";
       } else {

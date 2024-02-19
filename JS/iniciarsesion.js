@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     let form = document.getElementById('loginForm');
+    let usuarioError = document.getElementById('usuarioError');
 
     form.addEventListener('submit', async function (event) {
         event.preventDefault();
@@ -25,14 +26,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (rawData.success && rawData.token) {
                 localStorage.setItem('miToken', rawData.token);
-
                 window.location.href = rawData.redirect;
             } else {
                 console.error('Error:', rawData.error);
+                if (rawData.error === "Nombre de usuario o contraseña incorrectos.") {
+                    usuarioError.textContent = rawData.error;
+                } else {
+                    contraseñaError.textContent = rawData.error;
+                }
             }
 
         } catch (error) {
-            console.error('Error:', error.message);
+            console.error('Error desconocido:', error.message);
         }
     });
 });

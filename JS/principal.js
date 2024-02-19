@@ -137,32 +137,37 @@ let mostrarCarreras = (carreras) => {
 
 
 
-  let buscarCarreras = () => {
-    let nombreCarrera = document
-      .getElementById("nombrecarrera")
-      .value.toLowerCase();
-    let provinciaSeleccionada = document
-      .getElementById("provinciaInput")
-      .value.toLowerCase();
+let buscarCarreras = () => {
+  let nombreCarrera = document.getElementById("nombrecarrera").value.toLowerCase();
+  let provinciaSeleccionada = document.getElementById("provinciaInput").value.toLowerCase();
+  let distanciaInput = document.getElementById("distanciaInput").value;
 
-    let carreras = document.querySelectorAll(".carrera");
-    carreras.forEach((carrera) => {
-      let nombre = carrera
-        .querySelector("p:nth-child(3)")
-        .innerText.toLowerCase();
-      let localizacion = carrera
-        .querySelector(".carrera-localizacion")
-        .innerText.toLowerCase();
-      if (
-        nombre.includes(nombreCarrera) &&
-        localizacion.includes(provinciaSeleccionada)
-      ) {
-        carrera.style.display = "block";
-      } else {
-        carrera.style.display = "none";
-      }
-    });
-  };
+  // Convertir distanciaInput a un número entero
+  let distancia = parseInt(distanciaInput);
+  
+  let carreras = document.querySelectorAll(".carrera");
+  carreras.forEach((carrera) => {
+    let nombre = carrera.querySelector("p:nth-child(3)").innerText.toLowerCase();
+    let localizacion = carrera.querySelector(".carrera-localizacion").innerText.toLowerCase();
+    let distanciaCarrera = parseInt(carrera.querySelector(".carrera-distancia").innerText.toLowerCase().replace("km", ""));
+
+    // Comprobar si distanciaInput es un número válido
+    let esNumeroValido = !isNaN(distancia);
+
+    if (
+      nombre.includes(nombreCarrera) &&
+      localizacion.includes(provinciaSeleccionada) &&
+      (!esNumeroValido || distanciaCarrera <= distancia)
+    ) {
+      carrera.style.display = "block";
+    } else {
+      carrera.style.display = "none";
+    }
+  });
+};
+
+
+
 
 
 
@@ -354,7 +359,4 @@ let mostrarCarreras = (carreras) => {
           mostrarCarreras(data); // Utiliza la variable global data
       }
   }
-
-  
-
 });

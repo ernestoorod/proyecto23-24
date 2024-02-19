@@ -6,6 +6,41 @@ document.addEventListener('DOMContentLoaded', function () {
     let repetircontraseña = document.getElementById('password2');
     let telefono = document.getElementById('telefono');
     let form = document.getElementById('registroForm');
+    let mensajeUsuarioEnUso = document.getElementById('mensajeDisponibilidad');
+    let submitButton = document.getElementById('submitButton');
+
+    usuario.addEventListener('input', function () {
+        const valor = usuario.value.trim();
+        if (valor !== '') {
+            fetch('../PHP/verificar_usuario.php?username=' + encodeURIComponent(valor))
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error de conexión al servidor. Estado: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (!data.error) {
+                    if (data.available) {
+                        mensajeUsuarioEnUso.textContent = 'Nombre de usuario disponible';
+                        mensajeUsuarioEnUso.style.color = 'green';
+                        submitButton.disabled = false; // Habilitar el botón de enviar si el nombre de usuario está disponible
+                    } else {
+                        mensajeUsuarioEnUso.textContent = 'El nombre de usuario ya está en uso';
+                        mensajeUsuarioEnUso.style.color = 'red';
+                        submitButton.disabled = true; // Deshabilitar el botón de enviar si el nombre de usuario está en uso
+                    }
+                } else {
+                    console.log('Error al verificar el nombre de usuario:', data.error);
+                }
+            })
+            .catch(error => {
+                console.log('Error:', error.message);
+            });
+        } else {
+            mensajeUsuarioEnUso.textContent = '';
+        }
+    });
     
     // Localidades
     fetch('./poblaciones.json')
@@ -42,47 +77,45 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   
     // API
-form.addEventListener('submit', function (event) {
-    event.preventDefault();
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
 
-    let datosFormulario = new FormData(form);
+        let datosFormulario = new FormData(form);
 
-    fetch('../PHP/usuarios.php', {
-        method: 'POST',
-        body: datosFormulario
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Error de conexión al servidor. Estado: ' + response.status);
-        }
-        return response.json();
-    })
+        fetch('../PHP/usuarios.php', {
+            method: 'POST',
+            body: datosFormulario
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error de conexión al servidor. Estado: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Respuesta del servidor:', data);
 
-    .then(data => {
-        console.log('Respuesta del servidor:', data);
-
-        if (data.success && data.token) {
-            guardarTokenEnLocalStorage(data.token);
-
-            window.location.href = './principal.html';
-        } else {
-            console.log('Error al registrar usuario:', data.error);
-        }
-    })
-    
-    .catch(error => {
-        console.log('Error:', error.message);
+            if (data.success && data.token) {
+                guardarTokenEnLocalStorage(data.token);
+                window.location.href = './principal.html';
+            } else {
+                console.log('Error al registrar usuario:', data.error);
+            }
+        })
+        .catch(error => {
+            console.log('Error:', error.message);
+        });
     });
-});
-
 
     // Función para validar campo y mostrar símbolo de validación
     function validarCampo(valor, expresion, idValidacion) {
         const validacionElemento = document.getElementById(idValidacion);
-        if (valor && expresion.test(valor)) {
-            validacionElemento.innerHTML = '✓';
-        } else {
-            validacionElemento.innerHTML = '';
+        if (validacionElemento) {
+            if (valor && expresion.test(valor)) {
+                validacionElemento.innerHTML = '✓';
+            } else {
+                validacionElemento.innerHTML = '';
+            }
         }
     }
 

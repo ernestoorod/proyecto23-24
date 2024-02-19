@@ -21,13 +21,21 @@ label {
 
 input[type="text"],
 input[type="email"],
-input[type="tel"] {
+input[type="tel"],
+input[type="password"] {
     width: 100%;
     padding: 8px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+
+#btn-atras{
+    font-size: 30px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
 
 button {
     padding: 10px 20px;

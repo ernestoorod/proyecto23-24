@@ -6,6 +6,15 @@ document.addEventListener('DOMContentLoaded', function () {
     let misCarrerasButton = document.getElementById("btn-mis-carreras");
     let crearCarreraButton = document.getElementById("btn-abrir-modal");
     
+    document.getElementById('btn-atras').addEventListener('click', function() {
+        goBack();
+    });
+
+    // Función para ir atrás en la historia del navegador
+    function goBack() {
+        window.history.back();
+    }
+
     if (token !== null) {
         fetchUserData(token);
     } else {

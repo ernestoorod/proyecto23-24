@@ -11,11 +11,7 @@
     <link rel="stylesheet" href="./CSS/principal.css">
     <script src="https://kit.fontawesome.com/aa947686fa.js" crossorigin="anonymous"></script>
     <!-- Leaflet CSS -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-
-<!-- Leaflet JavaScript -->
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 <body>
     <header>
@@ -27,6 +23,7 @@
             <a href="./principal.html"><h1 id="h1">BUSQUEDA</h1></a><br>
             <input type="text" name="nombrecarrera" id="nombrecarrera" placeholder="Nombre de la carrera...">
             <input type="text" id="provinciaInput" name="provincias" list="provinciasList" placeholder="Busca por provincias" required>
+            <input type="number" id="distanciaInput" name="distancia" placeholder="Buscar por distancia (km)">
             <datalist id="provinciasList"></datalist>
 
             <input type="button" id="buscar" value="Buscar">
@@ -63,12 +60,12 @@
 
     <div class="carreras-container"></div>
 
-
     <div class="pagination">
         <button class="pagination-button" id="prevPage">Prev</button>
         <button class="pagination-button" id="nextPage">Next</button>
     </div>
     
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="./JS/principal.js"></script>
 </body>
 </html>

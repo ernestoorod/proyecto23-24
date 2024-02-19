@@ -6,6 +6,15 @@ document.addEventListener("DOMContentLoaded", function () {
     let urlParams = new URLSearchParams(window.location.search);
     let nombreCarrera = urlParams.get('nombre');
 
+    document.getElementById('btn-atras').addEventListener('click', function() {
+        goBack();
+    });
+
+    // Función para ir atrás en la historia del navegador
+    function goBack() {
+        window.history.back();
+    }
+
     btnBorrarCarrera.addEventListener('click', () => {
         dialogo.showModal();
     });
@@ -62,6 +71,31 @@ document.addEventListener("DOMContentLoaded", function () {
         let distancia = document.getElementById("distancia").value;
         let desnivel = document.getElementById("desnivel").value;
 
+        if (!validarNombre(nombre)) {
+            mostrarMensajeError(document.getElementById("nombre"), "Nombre de carrera inválido.");
+            return;
+        }
+
+        if (!validarLocalizacion(localizacion)) {
+            mostrarMensajeError(document.getElementById("localizacion"), "Localización inválida.");
+            return;
+        }
+
+        if (!validarFecha(fecha)) {
+            mostrarMensajeError(document.getElementById("fecha"), "Fecha inválida.");
+            return;
+        }
+
+        if (!validarDistancia(distancia)) {
+            mostrarMensajeError(document.getElementById("distancia"), "Distancia inválida.");
+            return;
+        }
+
+        if (!validarDesnivel(desnivel)) {
+            mostrarMensajeError(document.getElementById("desnivel"), "Desnivel inválido.");
+            return;
+        }
+
         enviarDatosEditados(nombre, localizacion, fecha, distancia, desnivel);
     });
 
@@ -92,4 +126,65 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("Error al editar los datos de la carrera:", error);
         });
     }
+
+    // Función para validar el nombre de la carrera
+    function validarNombre(nombre) {
+        return nombre.trim() !== '' && !nombre.startsWith('_') && !nombre.startsWith('-');
+    }
+
+    // Función para validar la localización
+    function validarLocalizacion(localizacion) {
+        return localizacion.trim() !== '';
+    }
+
+    // Función para validar la distancia
+    function validarDistancia(distancia) {
+        return !isNaN(distancia) && distancia.trim() !== '';
+    }
+
+    // Función para validar la fecha
+    function validarFecha(fecha) {
+        const fechaActual = new Date();
+        const regexFecha = /^\d{2}\/\d{2}\/\d{4}$/;
+    
+        if (!regexFecha.test(fecha.trim())) {
+            return false;
+        }
+    
+        const [dia, mes, año] = fecha.split('/').map(Number);
+    
+        if (dia < 1 || dia > 31 || mes < 1 || mes > 12) {
+            return false;
+        }
+    
+        const fechaIngresada = new Date(`${mes}/${dia}/${año}`);
+        if (fechaIngresada < fechaActual) {
+            return false;
+        }
+    
+        return true;
+    }
+
+    // Función para validar el desnivel
+    function validarDesnivel(desnivel) {
+        return !isNaN(desnivel) && desnivel.trim() !== '' && !desnivel.startsWith('_') && !desnivel.startsWith('-');
+    }
+
+    function mostrarMensajeError(inputElement, mensaje) {
+        // Crear un nuevo elemento <div> para mostrar el mensaje de error
+        const errorElemento = document.createElement('div');
+        errorElemento.className = 'error';
+        errorElemento.textContent = mensaje;
+    
+        // Insertar el mensaje de error dentro del div con id="errorDiv"
+        const errorDiv = document.getElementById('errorDiv');
+        errorDiv.innerHTML = ''; // Limpiar errores anteriores
+        errorDiv.appendChild(errorElemento);
+    }
+    
+    function mostrarError(mensaje) {
+        const errorDiv = document.getElementById('errorDiv');
+        errorDiv.textContent = mensaje;
+    }
+    
 });

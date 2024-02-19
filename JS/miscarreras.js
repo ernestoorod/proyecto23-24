@@ -1,4 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById('btn-atras').addEventListener('click', function() {
+        goBack();
+    });
+
+    // Función para ir atrás en la historia del navegador
+    function goBack() {
+        window.history.back();
+    }
+
     let token = localStorage.getItem("miToken");
 
     if (token !== null && !TokenExpirado(token)) {

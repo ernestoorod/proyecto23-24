@@ -5,37 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Datos de Carrera</title>
     <link rel="stylesheet" href="./CSS/editarcarrera.css">
+    <script src="https://kit.fontawesome.com/aa947686fa.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="./IMAGENES/icono.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200;0,7..72,300;0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;0,7..72,800;0,7..72,900;1,7..72,200;1,7..72,300;1,7..72,400;1,7..72,500;1,7..72,600;1,7..72,700;1,7..72,800;1,7..72,900&family=Roboto:wght@100&display=swap" rel="stylesheet">
 </head>
 <body>
+    <i class="fa-solid fa-arrow-left" id="btn-atras"></i>
     <h1>Editar Datos de Carrera</h1>
     <form id="editCarreraForm">
-        <label for="nombre">Nombre:</label><br>
-        <input type="text" id="nombre" name="nombre" required><br>
+        <label for="nombre">Nombre de la carrera:</label><br>
+        <input type="text" id="nombre" name="nombre"><br>
         
         <label for="localizacion">Localización:</label><br>
-        <input type="text" id="localizacion" name="localizacion" required><br>
+        <input type="text" id="localizacion" name="localizacion"><br>
         
-        <label for="fecha">Fecha:</label><br>
-        <input type="text" id="fecha" name="fecha" required><br>
+        <label for="fecha">Fecha (xx/xx/xxxx):</label><br>
+        <input type="text" id="fecha" name="fecha"><br>
         
-        <label for="distancia">Distancia (km):</label><br>
-        <input type="text" id="distancia" name="distancia" required><br>
+        <label for="distancia">Distancia (Solo número):</label><br>
+        <input type="text" id="distancia" name="distancia"><br>
 
-        <label for="desnivel">Desnivel:</label><br>
-        <input type="text" id="desnivel" name="desnivel" required><br>
+        <label for="desnivel">Desnivel (Número):</label><br>
+        <input type="text" id="desnivel" name="desnivel"><br>
 
         <button type="submit">Guardar Cambios</button>
     </form>
 
     <button class="borrar-carrera" id="btn-borrar-carrera">BORRAR CARRERA</button>
 
-            <dialog id="modal">
-                <h1 class="h1nombre">¿Estás seguro/a que quieres eliminar esta carrera permanentemente?</h1>
-                <form action="#" method="post" id="carrera-form">
-                    <input type="button" value="Cancelar" class="cuadro" id="btn-cancelar">
-                    <input type="button" value="Borrar" class="cuadro" id="btn-borrar">
-                </form>
-            </dialog>
+    <dialog id="modal">
+        <h1 class="h1nombre">¿Estás seguro/a que quieres eliminar esta carrera permanentemente?</h1>
+        <form action="#" method="post" id="carrera-form">
+            <input type="button" value="Cancelar" class="cuadro" id="btn-cancelar">
+            <input type="button" value="Borrar" class="cuadro" id="btn-borrar">
+        </form>
+    </dialog>
+
+    <div id="errorDiv" class="error"></div>
             
     <script src="./JS/editarcarrera.js"></script>
 </body>

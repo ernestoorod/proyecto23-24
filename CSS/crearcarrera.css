@@ -44,6 +44,13 @@ input {
     margin-top: 5px;
 } */
 
+
+.fa-solid{
+   font-size: 30px;
+   margin-top: 10px;
+   margin-left: 10px;
+}
+
 @media screen and (max-width: 600px) {
     #modal {
         margin: 20px;

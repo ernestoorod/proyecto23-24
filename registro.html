@@ -24,19 +24,20 @@
             <p><input type="submit" value="Entrar con google" id="google" action="#"></p>
 
             <label for="username">Nombre de usuario:</label><br>
-            <input type="text" id="username" name="username"><span id="usuarioValidacion" class="validacion"></span><br>
+            <input type="text" id="username" name="username"><div><span id="mensajeDisponibilidad"></span></div>
+            
 
             <label for="nombre" id="nombre">Nombre que se mostrara:</label><br>
-            <input type="text" id="nombre" name="nombre"><span id="nombreValidacion" class="validacion"></span><br>
+            <input type="text" id="nombre" name="nombre"><br>
 
             <label for="correo">Correo electronico:</label><br>
-            <input type="email" id="correo" name="correo"><span id="correoValidacion" class="validacion"></span><br>
+            <input type="email" id="correo" name="correo"><br>
 
             <label for="password">Contraseña:</label><br>
-            <input type="password" id="password" name="password"><span id="contraseñaValidacion" class="validacion"></span><br>
+            <input type="password" id="password" name="password"><br>
 
             <label for="password2">Repetir contraseña:</label><br>
-            <input type="password" id="password2" name="password2"><span id="repetirContraseñaValidacion" class="validacion"></span><br>         
+            <input type="password" id="password2" name="password2"><br>         
             
             <label for="localidad">Localidad:</label><br>
             <input type="text" id="localidad" name="localidad" list="localidades" required>
@@ -48,14 +49,14 @@
             <p>¿Eres organizador? Rellena los siguientes datos</p>
 
             <label for="telefono">Telefono:</label><br>
-            <input type="text" id="telefono" name="telefono"><span id="telefonoValidacion" class="validacion"></span><br>
+            <input type="text" id="telefono" name="telefono"><br>
 
             <label for="club">Nombre del cub organizador:</label><br>
             <input type="text" id="club" name="club"><br>
 
             <hr>
 
-            <input type="submit" value="Entrar">
+            <input type="submit" id="submitButton" value="Entrar">
         </form>
         </div>
     </div>

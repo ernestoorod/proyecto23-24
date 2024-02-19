@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="./CSS/crearcarrera.css">
+    <script src="https://kit.fontawesome.com/aa947686fa.js" crossorigin="anonymous"></script>
 </head>
 <body>
+  <i class="fa-solid fa-arrow-left" id="btn-atras"></i>
   <div id="modal">
     <form method="post" id="crearcarrera-form">
         <label for="nombrecarrera">Nombre de la carrera:</label>
@@ -15,24 +17,26 @@
         <label for="localizacion">Localización:</label>
         <input type="text" name="localizacion" id="localizacion"><br>
 
-        <label for="distancia">Distancia:</label>
+        <label for="distancia">Distancia( Solo numero ):</label>
         <input type="text" name="distancia" id="distancia"><br>
 
-        <label for="fecha">Fecha:</label>
+        <label for="fecha">Fecha( xx/xx/xxxx ):</label>
         <input type="text" name="fecha" id="fecha"><br>
 
-        <label for="desnivel">Desnivel:</label>
+        <label for="desnivel">Desnivel( numero ):</label>
         <input type="text" name="desnivel" id="desnivel"><br>
 
-        <label for="imagen">Añade una imagen:</label>
+        <label for="imagen">Añade una imagen( .png , .jpg , .ico , ... ):</label>
         <input type="file" name="imagen" id="imagen"><br>
 
-        <label for="gpx">Añade un archivo GPX:</label>
+        <label for="gpx">Añade un archivo GPX( .gpx ):</label>
         <input type="file" name="gpx" id="gpx"><br>
     
         <p>Si no tienes un archivo GPX, puedes crearlo en esta <a href="https://gpx.studio/l/es/" target="_blank">página</a>.</p>
 
         <input type="button" value="Crear carrera" id="btn-crear">
+        <div id="error-messages"></div>
+        
     </form>
 </div>
     <script src="./JS/crearcarrera.js"></script>

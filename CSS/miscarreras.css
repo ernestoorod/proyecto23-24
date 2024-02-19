@@ -1,4 +1,10 @@
 /* Carreras */
+#btn-atras{
+    font-size: 30px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
 .carreras-container {
     position: absolute;
     display: grid;

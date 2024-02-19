@@ -137,6 +137,13 @@ dialog {
     height: 40px;
 }
 
+.fa-solid{
+    font-size: 40px;
+    color: white;
+    margin-top: 20px;
+    margin-left: -1860px;
+ }
+
 @media screen and (max-width: 500px){
     body{
         background-image: none;

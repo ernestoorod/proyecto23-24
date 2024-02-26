@@ -68,5 +68,26 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error('Error al actualizar la carrera:', error);
         });
     });
+
+    // Agregamos un listener al botón de eliminar para eliminar la carrera
+    document.getElementById('eliminarCarreraBtn').addEventListener('click', function() {
+        const nombreCarrera = document.getElementById('nombre').value;
+
+        fetch(`../PHP/eliminarcarrera.php?nombre=${nombreCarrera}`, {
+            method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            if (data.success) {
+                console.log('Carrera eliminada exitosamente');
+                window.location.href = "../principal.html"
+            } else {
+                console.error('Error al eliminar la carrera');
+            }
+        })
+        .catch(error => {
+            console.error('Error en la solicitud de eliminación:', error);
+        });
+    });
 });
-1

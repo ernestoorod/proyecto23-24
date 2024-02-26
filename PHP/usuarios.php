@@ -1,6 +1,5 @@
 <?php
 require_once 'conexion.php';
-
 require_once '../vendor/autoload.php';
 
 use Firebase\JWT\JWT;
@@ -28,23 +27,36 @@ class TokenGenerator{
 $con = new Conexion();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (
-        isset($_POST['username']) &&
-        isset($_POST['nombre']) &&
-        isset($_POST['correo']) &&
-        isset($_POST['password']) &&
-        isset($_POST['localidad']) &&
-        isset($_POST['telefono']) &&
-        isset($_POST['club'])
-    ) {
-        $username = $_POST['username'];
-        $nombre = $_POST['nombre'];
-        $correo = $_POST['correo'];
-        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-        $localidad = $_POST['localidad'];
-        $telefono = $_POST['telefono'];
-        $club = $_POST['club'];
+    $requiredFields = ['username', 'nombre', 'correo', 'password', 'password2', 'localidad'];
+    $missingFields = [];
+
+    if ($_POST['password'] != $_POST['password2']) {
+        header("HTTP/1.1 400 Bad Request");
+        echo json_encode(['success' => false, 'error' => 'Las contraseñas son diferentes']);
+        exit;
     }
+
+    foreach ($requiredFields as $field) {
+        if (!isset($_POST[$field]) || empty($_POST[$field])) {
+            if ($field !== 'telefono' && $field !== 'club') {
+                $missingFields[] = $field;
+            }
+        }
+    }
+
+    if (!empty($missingFields)) {
+        header("HTTP/1.1 400 Bad Request");
+        echo json_encode(['success' => false, 'error' => 'Faltan los siguientes campos obligatorios: ' . implode(', ', $missingFields)]);
+        exit;
+    }
+
+    $username = $_POST['username'];
+    $nombre = $_POST['nombre'];
+    $correo = $_POST['correo'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $localidad = $_POST['localidad'];
+    $telefono = isset($_POST['telefono']) ? $_POST['telefono'] : '';
+    $club = isset($_POST['club']) ? $_POST['club'] : '';
 
     $sql = "INSERT INTO usuarios (username, nombre, correo, password, localidad, telefono, club) VALUES ('$username', '$nombre', '$correo', '$password', '$localidad', '$telefono', '$club')";
 
@@ -67,3 +79,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo json_encode(['success' => false, 'error' => 'Método de solicitud no válido.']);
     exit;
 }
+?>

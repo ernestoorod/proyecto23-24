@@ -91,6 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 throw new Error('Error de conexión al servidor. Estado: ' + response.status);
             }
             return response.json();
+            
         })
         .then(data => {
             console.log('Respuesta del servidor:', data);
@@ -99,6 +100,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 guardarTokenEnLocalStorage(data.token);
                 window.location.href = './principal.html';
             } else {
+                let mensajeError = document.getElementById('mensajeError');
+                mensajeError.textContent = data.error || 'Error al registrar usuario, te falta por completar algun campo o tienes un campo erroneo';
+                mensajeError.style.color = 'red';
                 console.log('Error al registrar usuario:', data.error);
             }
         })
@@ -206,17 +210,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
 
 
-    // Repetir Contraseña
-    function validarRepetirContraseña() {
-        const valor1 = contraseña.value;
-        const valor2 = repetircontraseña.value;
-
-        if (valor1 === valor2 && valor1 !== '') {
-            mostrarCoincidenciaContraseña(true);
-        } else {
-            mostrarCoincidenciaContraseña(false);
-        }
-    }
+    
 
     // Función para mostrar la coincidencia de las contraseñas
     function mostrarCoincidenciaContraseña(coinciden) {

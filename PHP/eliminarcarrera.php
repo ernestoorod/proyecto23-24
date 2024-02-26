@@ -1,6 +1,5 @@
 <?php
 require_once 'conexion.php';
-
 header('Content-Type: application/json');
 
 function eliminarCarrera($nombreCarrera) {
@@ -61,17 +60,8 @@ function eliminarImagen($nombreCarrera) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-    if(isset($_GET['ID'])) {
-        $ID = $_GET['ID'];
-
-        // Obtener el nombre de la carrera para eliminar los archivos asociados
-        $query = "SELECT nombre FROM carreras WHERE ID=?";
-        $stmt = $con->prepare($query);
-        $stmt->bind_param("i", $ID);
-        $stmt->execute();
-        $stmt->bind_result($nombreCarrera);
-        $stmt->fetch();
-        $stmt->close();
+    if(isset($_GET['nombre'])) {
+        $nombreCarrera = $_GET['nombre'];
 
         $resultadoCarrera = eliminarCarrera($nombreCarrera);
 
@@ -81,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
             echo json_encode(array('error' => 'Error al eliminar la carrera'));
         }
     } else {
-        echo json_encode(array('error' => 'El ID de la carrera no se proporcionó'));
+        echo json_encode(array('error' => 'El nombre de la carrera no se proporcionó'));
     }
 }
 ?>

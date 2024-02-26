@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.success) {
                 let carreraNombre = nombre; // Obtener el nombre de la carrera
                 console.log('Carrera creada con éxito. Nombre de carrera: ' + carreraNombre);
-
+                window.location.href = "../principal.html";
                 // Obtener el archivo GPX seleccionado por el usuario
                 let gpxFile = document.getElementById('gpx').files[0];
                 let imagenFile = document.getElementById('imagen').files[0];

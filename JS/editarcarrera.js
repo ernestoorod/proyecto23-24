@@ -8,6 +8,16 @@ document.addEventListener("DOMContentLoaded", function () {
     // Asignamos el ID de la carrera al campo oculto del formulario
     document.getElementById('carreraID').value = carreraID;
 
+    //Boton ir pagina de atras
+    document.getElementById('btn-atras').addEventListener('click', function() {
+        goBack();
+    });
+
+    // Función para ir atrás en la historia del navegador
+    function goBack() {
+        window.history.back();
+    }
+
     // Rellenamos los campos del formulario con los datos de la carrera
     fetch("../PHP/obtenercarrera.php?ID=" + carreraID)
         .then(response => response.json())

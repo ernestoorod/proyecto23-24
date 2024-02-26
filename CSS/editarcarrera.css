@@ -46,7 +46,7 @@ form button[type="submit"] {
     border-radius: 5px;
 }
 
-button.borrar-carrera {
+#eliminarCarreraBtn {
     display: block;
     margin: 20px auto;
     padding: 10px 20px;

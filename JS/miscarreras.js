@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then((response) => response.json())
         .then((carreras) => {
+            
             mostrarCarreras(carreras);
         })
         .catch((error) => {
@@ -29,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         let mostrarCarreras = (carreras) => {
+            console.log(carreras);
             let carrerasContainer = document.querySelector(".carreras-container");
             carrerasContainer.innerHTML = "";
         
@@ -118,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
         
                 // Agregar evento de clic para redireccionar a editarCarrera.html
                 carreraDiv.addEventListener("click", function () {
-                    window.location.href = "editarcarrera.html?nombre=" + carrera.nombre;
+                    window.location.href = "editarcarrera.html?ID=" + carrera.ID;
                 });
                 carrerasContainer.appendChild(carreraDiv);
             });

@@ -4,12 +4,14 @@ require_once 'conexion.php';
 header('Content-Type: application/json');
 
 class Carrera {
+    public $ID;
     public $nombre;
     public $localizacion;
     public $fecha;
     public $distancia;
 
-    public function __construct($nombre, $localizacion, $fecha, $distancia) {
+    public function __construct($ID, $nombre, $localizacion, $fecha, $distancia) {
+        $this->ID = $ID;
         $this->nombre = $nombre;
         $this->localizacion = $localizacion;
         $this->fecha = $fecha;
@@ -20,14 +22,14 @@ class Carrera {
 function obtenerCarreras() {
     $con = new Conexion();
 
-    $query = "SELECT nombre, localizacion, fecha, distancia FROM carreras";
+    $query = "SELECT ID, nombre, localizacion, fecha, distancia FROM carreras";
     $resultado = $con->query($query);
 
     $carreras = array();
 
     while ($fila = $resultado->fetch_assoc()) {
         $carrera = new Carrera(
-
+            $fila['ID'],
             $fila['nombre'],
             $fila['localizacion'],
             $fila['fecha'],

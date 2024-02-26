@@ -1,190 +1,62 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let dialogo = document.getElementById('modal');
-    let btnBorrarCarrera = document.getElementById('btn-borrar-carrera');
-    let btnCancelar = document.getElementById('btn-cancelar');
-    let btnBorrar = document.getElementById('btn-borrar');
-    let urlParams = new URLSearchParams(window.location.search);
-    let nombreCarrera = urlParams.get('nombre');
+    const editCarreraForm = document.getElementById('editCarreraForm');
 
-    document.getElementById('btn-atras').addEventListener('click', function() {
-        goBack();
-    });
+    // Obtenemos el ID de la carrera de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const carreraID = urlParams.get('ID');
 
-    // Función para ir atrás en la historia del navegador
-    function goBack() {
-        window.history.back();
-    }
+    // Asignamos el ID de la carrera al campo oculto del formulario
+    document.getElementById('carreraID').value = carreraID;
 
-    btnBorrarCarrera.addEventListener('click', () => {
-        dialogo.showModal();
-    });
-
-    btnCancelar.addEventListener('click', () => {
-        dialogo.close();
-    });
-
-    btnBorrar.addEventListener('click', () => {
-        console.log('Borrando carrera...');
-        fetch("../PHP/editarcarrera.php?nombre=" + nombreCarrera, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-            }
-        })
+    // Rellenamos los campos del formulario con los datos de la carrera
+    fetch("../PHP/obtenercarrera.php?ID=" + carreraID)
         .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                console.log("Carrera borrada exitosamente");
-                window.location.href = "../principal.html";
-            } else {
-                console.error("Error al borrar la carrera:", data.error);
-            }
+        .then(carrera => {
+            document.getElementById('nombre').value = carrera.nombre;
+            document.getElementById('localizacion').value = carrera.localizacion;
+            document.getElementById('fecha').value = carrera.fecha;
+            document.getElementById('distancia').value = carrera.distancia;
         })
         .catch(error => {
-            console.error("Error al borrar la carrera:", error);
+            console.error('Error al obtener los datos de la carrera:', error);
         });
-        dialogo.close();
-    });
 
-    if (window.location.href.includes("index.html")) {
-        localStorage.removeItem("miToken");
-    }
+    // Agregamos un listener al evento submit del formulario para manejar la actualización de la carrera
+    editCarreraForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Evita que el formulario se envíe automáticamente
 
-    document.getElementById("nombre").value = nombreCarrera;
+        // Obtenemos los valores de los campos del formulario
+        const nombre = document.getElementById('nombre').value;
+        const localizacion = document.getElementById('localizacion').value;
+        const fecha = document.getElementById('fecha').value;
+        const distancia = document.getElementById('distancia').value;
 
-    fetch("../PHP/editarcarrera.php?nombre=" + nombreCarrera)
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById("localizacion").value = data.localizacion;
-        document.getElementById("fecha").value = data.fecha;
-        document.getElementById("distancia").value = data.distancia;
-        document.getElementById("desnivel").value = data.desnivel;
-    })
-    .catch(error => console.error("Error al obtener los datos de la carrera:", error));
+        // Creamos un objeto con los datos de la carrera
+        const carreraData = {
+            ID: carreraID,
+            nombre: nombre,
+            localizacion: localizacion,
+            fecha: fecha,
+            distancia: distancia
+        };
 
-    document.getElementById("editCarreraForm").addEventListener("submit", function(event) {
-        event.preventDefault();
-
-        let nombre = document.getElementById("nombre").value;
-        let localizacion = document.getElementById("localizacion").value;
-        let fecha = document.getElementById("fecha").value;
-        let distancia = document.getElementById("distancia").value;
-        let desnivel = document.getElementById("desnivel").value;
-
-        if (!validarNombre(nombre)) {
-            mostrarMensajeError(document.getElementById("nombre"), "Nombre de carrera inválido.");
-            return;
-        }
-
-        if (!validarLocalizacion(localizacion)) {
-            mostrarMensajeError(document.getElementById("localizacion"), "Localización inválida.");
-            return;
-        }
-
-        if (!validarFecha(fecha)) {
-            mostrarMensajeError(document.getElementById("fecha"), "Fecha inválida.");
-            return;
-        }
-
-        if (!validarDistancia(distancia)) {
-            mostrarMensajeError(document.getElementById("distancia"), "Distancia inválida.");
-            return;
-        }
-
-        if (!validarDesnivel(desnivel)) {
-            mostrarMensajeError(document.getElementById("desnivel"), "Desnivel inválido.");
-            return;
-        }
-
-        enviarDatosEditados(nombre, localizacion, fecha, distancia, desnivel);
-    });
-
-    function enviarDatosEditados(nombre, localizacion, fecha, distancia, desnivel) {
-        fetch("../PHP/editarcarrera.php?nombre=" + nombre, {
+        // Enviamos la solicitud de actualización al servidor
+        fetch("../PHP/editarcarrera.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({
-                localizacion: localizacion,
-                fecha: fecha,
-                distancia: distancia,
-                desnivel: desnivel
-            })
+            body: JSON.stringify(carreraData)
         })
-
         .then(response => response.json())
         .then(data => {
-            if (data.success) {
-                console.log("Datos de la carrera editados exitosamente");
-                window.location.href = "../principal.html";
-            } else {
-                console.error("Error al editar los datos de la carrera:", data.error);
-            }
+            // Aquí puedes manejar la respuesta del servidor, como mostrar un mensaje de éxito o redireccionar a otra página
+            console.log('Carrera actualizada:', data);
+            window.location.href = '../principal.html'
         })
         .catch(error => {
-            console.error("Error al editar los datos de la carrera:", error);
+            console.error('Error al actualizar la carrera:', error);
         });
-    }
-
-    // Función para validar el nombre de la carrera
-    function validarNombre(nombre) {
-        return nombre.trim() !== '' && !nombre.startsWith('_') && !nombre.startsWith('-');
-    }
-
-    // Función para validar la localización
-    function validarLocalizacion(localizacion) {
-        return localizacion.trim() !== '';
-    }
-
-    // Función para validar la distancia
-    function validarDistancia(distancia) {
-        return !isNaN(distancia) && distancia.trim() !== '';
-    }
-
-    // Función para validar la fecha
-    function validarFecha(fecha) {
-        const fechaActual = new Date();
-        const regexFecha = /^\d{2}\/\d{2}\/\d{4}$/;
-    
-        if (!regexFecha.test(fecha.trim())) {
-            return false;
-        }
-    
-        const [dia, mes, año] = fecha.split('/').map(Number);
-    
-        if (dia < 1 || dia > 31 || mes < 1 || mes > 12) {
-            return false;
-        }
-    
-        const fechaIngresada = new Date(`${mes}/${dia}/${año}`);
-        if (fechaIngresada < fechaActual) {
-            return false;
-        }
-    
-        return true;
-    }
-
-    // Función para validar el desnivel
-    function validarDesnivel(desnivel) {
-        return !isNaN(desnivel) && desnivel.trim() !== '' && !desnivel.startsWith('_') && !desnivel.startsWith('-');
-    }
-
-    function mostrarMensajeError(inputElement, mensaje) {
-        // Crear un nuevo elemento <div> para mostrar el mensaje de error
-        const errorElemento = document.createElement('div');
-        errorElemento.className = 'error';
-        errorElemento.textContent = mensaje;
-    
-        // Insertar el mensaje de error dentro del div con id="errorDiv"
-        const errorDiv = document.getElementById('errorDiv');
-        errorDiv.innerHTML = ''; // Limpiar errores anteriores
-        errorDiv.appendChild(errorElemento);
-    }
-    
-    function mostrarError(mensaje) {
-        const errorDiv = document.getElementById('errorDiv');
-        errorDiv.textContent = mensaje;
-    }
-    
+    });
 });
+1

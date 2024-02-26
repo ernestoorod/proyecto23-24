@@ -4,12 +4,14 @@ require_once 'conexion.php';
 header('Content-Type: application/json');
 
 class Carrera {
+    public $ID;
     public $nombre;
     public $localizacion;
     public $fecha;
     public $distancia;
 
-    public function __construct($nombre, $localizacion, $fecha, $distancia) {
+    public function __construct($ID, $nombre, $localizacion, $fecha, $distancia) {
+        $this->ID = $ID;
         $this->nombre = $nombre;
         $this->localizacion = $localizacion;
         $this->fecha = $fecha;
@@ -20,7 +22,7 @@ class Carrera {
 function obtenerCarrerasPorUsuario($userId) {
     $con = new Conexion();
 
-    $query = "SELECT nombre, localizacion, fecha, distancia FROM carreras WHERE IDusuario = ?";
+    $query = "SELECT ID, nombre, localizacion, fecha, distancia FROM carreras WHERE IDusuario = ?";
     $stmt = $con->prepare($query);
     $stmt->bind_param("i", $userId);
     $stmt->execute();
@@ -30,6 +32,7 @@ function obtenerCarrerasPorUsuario($userId) {
 
     while ($fila = $resultado->fetch_assoc()) {
         $carrera = new Carrera(
+            $fila['ID'],
             $fila['nombre'],
             $fila['localizacion'],
             $fila['fecha'],
